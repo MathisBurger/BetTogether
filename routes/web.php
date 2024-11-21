@@ -17,4 +17,5 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/explore-communities', [CommunityViewController::class, 'exploreCommunitiesView'])->name('explore-communities');
+    Route::view('/create-community', 'community.createCommunity')->name('create-community');
 });

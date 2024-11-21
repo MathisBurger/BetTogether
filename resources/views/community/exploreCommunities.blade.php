@@ -3,7 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Explore communities') }}
         </h2>
-        <a href="" class="btn btn-primary">Create Community</a>
+        <x-link href="{{route('create-community')}}">Create Community</x-link>
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
