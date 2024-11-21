@@ -5,6 +5,7 @@ namespace App\Actions\Community;
 use App\Models\BetCreationPolicy;
 use App\Models\Community;
 use App\Models\CommunityJoinPolicy;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\ValidationException;
@@ -35,6 +36,7 @@ class CommunityActions
             'name' => $data['name'],
             'joinPolicy' => $data['joinPolicy'],
             'betCreationPolicy' => $data['betCreationPolicy'],
+            'admin_id' => Auth::id(),
         ]);
     }
 

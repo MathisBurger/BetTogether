@@ -12,12 +12,16 @@
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Admin</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                     @foreach ($communities as $community)
                         <tr>
                             <td>{{ $community->name }}</td>
+                            <td>{{ $community->admin->name }}</td>
+                            <td><x-link>Open</x-link></td>
                         </tr>
                     @endforeach
                     </tbody>

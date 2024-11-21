@@ -19,7 +19,8 @@ class Community extends Model
     protected $fillable = [
         'name',
         'joinPolicy',
-        'betCreationPolicy'
+        'betCreationPolicy',
+        'admin_id'
     ];
 
     public function admin(): BelongsTo

@@ -7,7 +7,7 @@
     <div class="py-12">
       <x-card>
           <x-validation-errors class="mb-4" />
-          <form method="POST" action="{{ route('register') }}">
+          <form method="POST" action="{{ route('create-community-action') }}">
               @csrf
 
               <div>
@@ -17,7 +17,7 @@
 
               <div class="mt-4">
                   <x-label value="{{ __('Join policy') }}" />
-                  <x-select>
+                  <x-select name="joinPolicy">
                       <option value="open">Open</option>
                       <option value="request">Request</option>
                       <option value="closed">Closed</option>
@@ -26,7 +26,7 @@
 
               <div class="mt-4">
                   <x-label value="{{ __('Bet creation policy') }}" />
-                  <x-select>
+                  <x-select name="betCreationPolicy">
                       <option value="admin">Admin only</option>
                       <option value="creators">Creators only</option>
                       <option value="everyone">Everyone</option>
