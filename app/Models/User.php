@@ -77,7 +77,7 @@ class User extends Authenticatable
 
     public function communities(): BelongsToMany
     {
-        return $this->belongsToMany(Community::class, 'community_members');
+        return $this->belongsToMany(Community::class, 'community_members', 'community_id', 'member_id');
     }
 
     public function betCreatorIn(): BelongsToMany

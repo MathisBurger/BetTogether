@@ -65,4 +65,25 @@ class CommunityActions
         return $community;
     }
 
+    /**
+     * Joins the current user into a community
+     *
+     * @param string $id The community ID
+     * @return Community The updated community
+     * @throws \Exception If user is already member
+     */
+    public function join(string $id): Community
+    {
+        var_dump("123");
+        $community = Community::where('id', $id)->firstOrFail();
+        if ($community->members()->where('member_id', Auth::id())->exists()) {
+            throw new \Exception("You are already an member");
+        }
+        var_dump("sfdfsfds");
+        var_dump("lol");
+        $community->members()->attach(Auth::id());
+        $community->save();
+        return $community;
+    }
+
 }

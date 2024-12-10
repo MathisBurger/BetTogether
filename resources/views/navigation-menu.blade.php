@@ -18,6 +18,9 @@
                     <x-nav-link href="{{ route('explore-communities') }}" :active="request()->routeIs('explore-communities')">
                         {{ __('Explore Communities') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('communities-view') }}" :active="request()->routeIs('communities-view')">
+                        {{ __('Communities') }}
+                    </x-nav-link>
                 </div>
             </div>
 

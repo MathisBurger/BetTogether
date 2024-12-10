@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Community\CommunityActions;
-use App\Models\Community;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 readonly class CommunityActionController
 {
@@ -32,6 +29,15 @@ readonly class CommunityActionController
     public function update(string $id, Request $request): RedirectResponse
     {
         $community = $this->actions->update($id, $request->all());
+        return redirect(route('show-community', $community));
+    }
+
+    /**
+     * @throws \Exception If user is already member of the group
+     */
+    public function joinCommunity(string $id): RedirectResponse
+    {
+        $community = $this->actions->join($id);
         return redirect(route('show-community', $community));
     }
 
