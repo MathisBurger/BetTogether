@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Community\CommunityActions;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
@@ -17,10 +18,11 @@ readonly class CommunityActionController
     /**
      * @throws ValidationException On invalid input data
      */
-    public function create(Request $request): Response
+    public function create(Request $request): RedirectResponse
     {
         $community = $this->actions->create($request->all());
-        return response($community, ResponseAlias::HTTP_CREATED);
+
+        return redirect(route('show-community', $community));
     }
 
 }

@@ -9,5 +9,4 @@ enum CommunityJoinPolicy: string
 {
     case Open = 'open';
     case Closed = 'closed';
-    case Request = 'request';
 }

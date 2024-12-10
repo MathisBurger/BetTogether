@@ -19,7 +19,6 @@
                   <x-label value="{{ __('Join policy') }}" />
                   <x-select name="joinPolicy">
                       <option value="open">Open</option>
-                      <option value="request">Request</option>
                       <option value="closed">Closed</option>
                   </x-select>
               </div>

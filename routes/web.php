@@ -20,4 +20,5 @@ Route::middleware([
     Route::get('/explore-communities', [CommunityViewController::class, 'exploreCommunitiesView'])->name('explore-communities');
     Route::view('/create-community', 'community.createCommunity')->name('create-community');
     Route::post('/create-community', [CommunityActionController::class, 'create'])->name('create-community-action');
+    Route::get('/community/{community}', [CommunityViewController::class, 'viewCommunity'])->name('show-community');
 });
