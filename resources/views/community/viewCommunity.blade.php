@@ -4,7 +4,7 @@
             {{ __('Community:') }} {{$community->name}}
         </h2>
         @if ($community->admin->id === auth()->user()->getAuthIdentifier())
-            <x-button>Edit (not implemented yet)</x-button>
+            <x-link href="{{route('show-edit-community', $community->id)}}">Edit</x-link>
         @endif
     </x-slot>
 </x-app-layout>
