@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Actions\Community;
+namespace App\Actions;
 
 use App\Models\BetCreationPolicy;
 use App\Models\Community;
 use App\Models\CommunityJoinPolicy;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\ValidationException;
@@ -61,6 +62,9 @@ class CommunityActions
         ])->validate();
         $community->joinPolicy = $data['joinPolicy'];
         $community->betCreationPolicy = $data['betCreationPolicy'];
+
+        Gate::authorize('update', $community);
+
         $community->save();
         return $community;
     }
@@ -74,13 +78,8 @@ class CommunityActions
      */
     public function join(string $id): Community
     {
-        var_dump("123");
         $community = Community::where('id', $id)->firstOrFail();
-        if ($community->members()->where('member_id', Auth::id())->exists()) {
-            throw new \Exception("You are already an member");
-        }
-        var_dump("sfdfsfds");
-        var_dump("lol");
+        Gate::authorize('join', $community);
         $community->members()->attach(Auth::id());
         $community->save();
         return $community;

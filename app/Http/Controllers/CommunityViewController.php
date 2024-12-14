@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BetCreationPolicy;
 use App\Models\Community;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -29,9 +31,9 @@ class CommunityViewController
     public function viewCommunity(string $id): View
     {
         $community = Community::where('id', $id)->first();
-        if ($community->members->filter(fn ($user) => $user->id === Auth::id())->isEmpty() && $community->admin->id !== Auth::id()) {
-            throw new AccessDeniedHttpException('You do not have permission to view this community.');
-        }
+
+        Gate::authorize('read', $community);
+
         $members = User::join('community_members', 'community_members.member_id', '=', 'users.id')
             ->where('community_members.community_id', $id)->paginate(50);
 
@@ -41,9 +43,7 @@ class CommunityViewController
     public function viewEditCommunity(string $id): View
     {
         $community = Community::where('id', $id)->first();
-        if (empty($community) || $community->admin->id !== auth()->user()->getAuthIdentifier()) {
-            throw new AccessDeniedHttpException();
-        }
+        Gate::authorize('update', $community);
         return \view('community.editCommunity', ['community' => $community]);
     }
 }

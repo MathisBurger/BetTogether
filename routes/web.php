@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BetViewController;
 use App\Http\Controllers\CommunityActionController;
 use App\Http\Controllers\CommunityViewController;
 use Illuminate\Support\Facades\Route;
@@ -25,4 +26,5 @@ Route::middleware([
     Route::get('/communities/{community}/edit', [CommunityViewController::class, 'viewEditCommunity'])->name('show-edit-community');
     Route::post('/communities/{community}/edit', [CommunityActionController::class, 'update'])->name('update-community-action');
     Route::post('/communities/{community}/join', [CommunityActionController::class, 'joinCommunity'])->name('join-community-action');
+    Route::get('/communities/{community}/create-bet', [BetViewController::class, 'createBetView'])->name('create-bet');
 });
