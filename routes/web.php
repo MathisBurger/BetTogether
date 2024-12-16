@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BetActionController;
 use App\Http\Controllers\BetViewController;
 use App\Http\Controllers\CommunityActionController;
 use App\Http\Controllers\CommunityViewController;
@@ -18,6 +19,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
+    // Community
     Route::get('/explore-communities', [CommunityViewController::class, 'exploreCommunitiesView'])->name('explore-communities');
     Route::view('/create-community', 'community.createCommunity')->name('create-community');
     Route::post('/create-community', [CommunityActionController::class, 'create'])->name('create-community-action');
@@ -26,5 +28,9 @@ Route::middleware([
     Route::get('/communities/{community}/edit', [CommunityViewController::class, 'viewEditCommunity'])->name('show-edit-community');
     Route::post('/communities/{community}/edit', [CommunityActionController::class, 'update'])->name('update-community-action');
     Route::post('/communities/{community}/join', [CommunityActionController::class, 'joinCommunity'])->name('join-community-action');
+
+    // Bet
     Route::get('/communities/{community}/create-bet', [BetViewController::class, 'createBetView'])->name('create-bet');
+    Route::post('/communities/{community}/create-bet', [BetActionController::class, 'create'])->name('create-bet-action');
+    Route::get('/bets/{bet}', [BetViewController::class, 'viewBet'])->name('view-bet');
 });

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,18 +15,28 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Bet extends Model
 {
     use HasUuids;
+    use HasTimestamps;
 
     protected $fillable = [
         'betText',
         'totalPoints',
         'determinationStrategy',
         'endDateTime',
-        'isDeterminated'
+        'isDeterminated',
+        'community_id',
+        'creator_id'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'endDateTime' => 'datetime'
+        ];
+    }
 
     public function creator(): HasOne
     {
-        return $this->hasOne(User::class, 'creator_id');
+        return $this->hasOne(User::class, 'id', 'creator_id');
     }
 
     public function community(): BelongsTo

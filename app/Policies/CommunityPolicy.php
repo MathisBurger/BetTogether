@@ -7,6 +7,7 @@ use App\Models\Community;
 use App\Models\CommunityJoinPolicy;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
+use Nette\NotImplementedException;
 
 class CommunityPolicy implements PolicyInterface
 {
@@ -47,12 +48,12 @@ class CommunityPolicy implements PolicyInterface
 
     public function create(User $authUser, $object): bool
     {
-        return false;
+        throw new NotImplementedException();
     }
 
     public function delete(User $authUser, $object): bool
     {
-        return false;
+        throw new NotImplementedException();
     }
 
     public static function registerOther(): void

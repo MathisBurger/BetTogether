@@ -9,6 +9,7 @@ use App\Models\BetDeterminationStrategy;
 use App\Models\Community;
 use App\Models\ResultType;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Enum;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -21,15 +22,7 @@ class BetActions {
     public function createBet(string $id, array $data): Bet
     {
         $community = Community::where('id', $id)->firstOrFail();
-        $canCreateBet = match ($community->betCreationPolicy) {
-            BetCreationPolicy::AdminOnly->value => $community->admin->id === Auth::id(),
-            BetCreationPolicy::Creators->value => $community->betCreators->filter(fn ($user) => $user->id === Auth::id()),
-            BetCreationPolicy::Everyone->value => $community->members->filter(fn ($user) => $user->id === Auth::id()),
-            default => false,
-        };
-        if (!$canCreateBet) {
-            throw new AccessDeniedException("Cannot create bet");
-        }
+        Gate::authorize('createBet', $community);
 
         Validator::make($data, [
             'answerType' => ['required', 'string', new Enum(ResultType::class)],
@@ -38,13 +31,13 @@ class BetActions {
         ])->validate();
 
         $bet = Bet::create([
-            'community_id' => $id,
+            'community_id' => $community->id,
             'creator_id' => Auth::id(),
             'betText' => $data['betText'],
             'totalPoints' => $data['totalPoints'],
             'determinationStrategy' => $data['determinationStrategy'],
             'endDateTime' => $data['endDateTime'],
-            'isDeterminated' => $data['isDeterminated'],
+            'isDeterminated' => false,
         ]);
 
         BetAnswer::create([

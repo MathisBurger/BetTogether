@@ -23,9 +23,7 @@
                             <td>{{ $community->name }}</td>
                             <td>{{ $community->admin->name }}</td>
                             <td>
-                                @if ($community->joinPolicy == CommunityJoinPolicy::Open->value)
-                                    <x-link href="{{route('show-community', $community->id)}}">Open</x-link>
-                                @endif
+                                <x-link href="{{route('show-community', $community->id)}}">Open</x-link>
                             </td>
                         </tr>
                     @endforeach

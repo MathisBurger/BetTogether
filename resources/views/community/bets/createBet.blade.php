@@ -7,7 +7,7 @@
     <div class="py-12">
         <x-card>
             <x-validation-errors class="mb-4" />
-            <form method="POST" action="{{ route('create-community-action') }}">
+            <form method="POST" action="{{ route('create-bet-action', $communityId) }}">
                 @csrf
 
                 <div>

@@ -1,4 +1,4 @@
-@php use Illuminate\Support\Facades\Gate; @endphp
+@php use Illuminate\Support\Facades\Gate;use Illuminate\Support\Str; @endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -35,6 +35,62 @@
             </table>
 
             {{ $members->links() }}
+        @endif
+
+        @if(request()->get('tab') === 'Active bets')
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Text</th>
+                    <th>Total points</th>
+                    <th>End date time</th>
+                    <th>Creator</th>
+                    <th>Actions</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($activeBets as $bet)
+                    <tr>
+                        <td>{{ Str::limit($bet->betText, 50) }}</td>
+                        <td>{{$bet->totalPoints}}</td>
+                        <td>{{ $bet->endDateTime->format('Y-m-d H:i:s') }}</td>
+                        <td>{{$bet->creator->name}}</td>
+                        <td>Open</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+
+            {{ $activeBets->links() }}
+        @endif
+
+        @if(request()->get('tab') === 'Past bets')
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Text</th>
+                    <th>Total points</th>
+                    <th>End date time</th>
+                    <th>Creator</th>
+                    <th>Actions</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($pastBets as $bet)
+                    <tr>
+                        <td>{{ Str::limit($bet->betText, 50) }}</td>
+                        <td>{{$bet->totalPoints}}</td>
+                        <td>{{ $bet->endDateTime->format('Y-m-d H:i:s') }}</td>
+                        <td>{{$bet->creator->name}}</td>
+                        <td>Open</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+
+            {{ $activeBets->links() }}
         @endif
 
 
