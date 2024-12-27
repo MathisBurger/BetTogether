@@ -16,12 +16,15 @@
                 Open
             @endif
         </span>
+        <span style="background: #fef9c3; color: #854d0e" class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium">{{$bet->totalPoints}} points</span>
         <br />
-        <div class="mt-1">
-            <x-link href="">
-                Place bet
-            </x-link>
-        </div>
+        @if(!$hasPlacedBet)
+            <div class="mt-1">
+                <x-link href="">
+                    Place bet
+                </x-link>
+            </div>
+        @endif
         <table class="table">
             <thead>
                 <tr>
