@@ -32,8 +32,12 @@ class BetPolicy implements PolicyInterface
         throw new NotImplementedException();
     }
 
+    public function canPlaceBet(User $user, Bet $bet): bool
+    {
+        return Gate::allows('read', $bet) && !$bet->placedBets()->where('user_id', auth()->id())->exists();
+    }
+
     public static function registerOther(): void
     {
-        // TODO: Implement registerOther() method.
     }
 }

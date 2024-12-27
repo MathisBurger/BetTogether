@@ -14,13 +14,20 @@ class BetViewController
         /** @var Bet $bet */
         $bet = Bet::find($id);
         Gate::authorize('read', $bet);
-        $hasPlacedBet = $bet->placedBets()->where('user_id', auth()->id())->exists();
-        return view('community.bets.viewBet', ['bet' => $bet, 'hasPlacedBet' => $hasPlacedBet]);
+        $canPlaceBet = Gate::allows('canPlaceBet', $bet);
+        return view('community.bets.viewBet', ['bet' => $bet, 'canPlaceBet' => $canPlaceBet]);
     }
 
     public function createBetView(string $id): View
     {
         return view('community.bets.createBet', ['communityId' => $id]);
+    }
+
+    public function placeBetView(string $id): View
+    {
+        $bet = Bet::find($id);
+        Gate::authorize('read', $bet);
+        return view('community.bets.placeBet', ['betId' => $id]);
     }
 
 }
