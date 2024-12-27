@@ -11,9 +11,11 @@ class BetViewController
 
     public function viewBet(string $id): View
     {
+        /** @var Bet $bet */
         $bet = Bet::find($id);
         Gate::authorize('read', $bet);
-        return view('community.bets.viewBet');
+        $hasPlacedBet = $bet->placedBets()->where('user_id', auth()->id())->exists();
+        return view('community.bets.viewBet', ['bet' => $bet, 'hasPlacedBet' => $hasPlacedBet]);
     }
 
     public function createBetView(string $id): View

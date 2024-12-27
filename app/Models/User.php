@@ -94,4 +94,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Standing::class);
     }
+
+    public function placedBets(): HasMany
+    {
+        return $this->hasMany(PlacedBet::class);
+    }
 }

@@ -27,4 +27,9 @@ class PlacedBet extends Model
     {
         return $this->belongsTo(Bet::class);
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

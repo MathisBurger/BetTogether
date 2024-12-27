@@ -56,7 +56,11 @@
                         <td>{{$bet->totalPoints}}</td>
                         <td>{{ $bet->endDateTime->format('Y-m-d H:i:s') }}</td>
                         <td>{{$bet->creator->name}}</td>
-                        <td>Open</td>
+                        <td>
+                            <x-link href="{{route('view-bet', $bet->id)}}">
+                                Open
+                            </x-link>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -84,7 +88,11 @@
                         <td>{{$bet->totalPoints}}</td>
                         <td>{{ $bet->endDateTime->format('Y-m-d H:i:s') }}</td>
                         <td>{{$bet->creator->name}}</td>
-                        <td>Open</td>
+                        <td>
+                            <x-link href="{{route('view-bet', $bet->id)}}">
+                                Open
+                            </x-link>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
