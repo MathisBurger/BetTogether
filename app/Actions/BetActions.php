@@ -65,6 +65,9 @@ class BetActions {
         BetAnswer::create([
            'placed_bet_id' => $placedBet->id,
            'type' => $bet->answer->type,
+            'stringValue' => $data['stringValue'] ?? null,
+            'integerValue' => $data['integerValue'] ?? null,
+            'floatValue' => $data['floatValue'] ?? null,
         ]);
         return $placedBet;
     }

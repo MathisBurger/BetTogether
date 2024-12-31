@@ -38,7 +38,7 @@
                 @foreach($placedBets as $placedBet)
                     <tr>
                         <td>{{$placedBet->user->name}}</td>
-                        <td>{{$placedBet->answer->type}}</td>
+                        <td><x-answer-display :answer="$placedBet->answer" /></td>
                     </tr>
                 @endforeach
             </tbody>

@@ -16,8 +16,11 @@ class CommunityViewController
 
     public function exploreCommunitiesView(): View
     {
-        $communities = Community::leftJoin('community_members', 'community_members.community_id', '=', 'communities.id')
-            ->whereNot('community_members.member_id', Auth::id())->whereNot('admin_id', Auth::id())->paginate(50);
+        $communities = Community::where('admin_id', '!=', Auth::id())
+            ->whereDoesntHave('members', function ($query) {
+                $query->where('member_id', Auth::id());
+            })
+            ->paginate(50);
         return view('community.exploreCommunities', ['communities' => $communities]);
     }
 
