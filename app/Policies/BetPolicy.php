@@ -34,7 +34,9 @@ class BetPolicy implements PolicyInterface
 
     public function canPlaceBet(User $user, Bet $bet): bool
     {
-        return Gate::allows('read', $bet) && !$bet->placedBets()->where('user_id', auth()->id())->exists();
+        return Gate::allows('read', $bet)
+            && !$bet->placedBets()->where('user_id', auth()->id())->exists()
+            && $bet->endDateTime->isAfter(now());
     }
 
     public static function registerOther(): void

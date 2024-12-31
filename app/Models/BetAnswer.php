@@ -18,6 +18,8 @@ class BetAnswer extends Model
 
 
     protected $fillable = [
+        'bet_id',
+        'placed_bet_id',
         'type',
         'stringValue',
         'integerValue',

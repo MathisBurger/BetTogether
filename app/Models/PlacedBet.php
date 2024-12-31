@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Traits\Timestamp;
+use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,8 +15,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class PlacedBet extends Model
 {
     use HasUuids;
+    use HasTimestamps;
 
     protected $fillable = [
+        'bet_id',
+        'user_id',
         'points'
     ];
 

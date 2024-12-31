@@ -7,6 +7,7 @@ use App\Models\BetAnswer;
 use App\Models\BetCreationPolicy;
 use App\Models\BetDeterminationStrategy;
 use App\Models\Community;
+use App\Models\PlacedBet;
 use App\Models\ResultType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -47,4 +48,24 @@ class BetActions {
         return $bet;
     }
 
+    public function placeBet(string $id, array $data): PlacedBet
+    {
+        $bet = Bet::with('answer')->where('id', $id)->firstOrFail();
+        Gate::authorize('canPlaceBet', $bet);
+        Validator::make($data, [
+            'stringValue' => ['string'],
+            'integerValue' => ['integer'],
+            'floatValue' => ['float'],
+        ])->validate();
+
+        $placedBet = PlacedBet::create([
+            'bet_id' => $bet->id,
+            'user_id' => Auth::id(),
+        ]);
+        BetAnswer::create([
+           'placed_bet_id' => $placedBet->id,
+           'type' => $bet->answer->type,
+        ]);
+        return $placedBet;
+    }
 }

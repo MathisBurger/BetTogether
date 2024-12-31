@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bet;
+use App\Models\PlacedBet;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
@@ -14,8 +15,12 @@ class BetViewController
         /** @var Bet $bet */
         $bet = Bet::find($id);
         Gate::authorize('read', $bet);
+        $placedBets = PlacedBet::with('answer')
+            ->with('user')
+            ->where('bet_id', $id)
+            ->paginate(50);
         $canPlaceBet = Gate::allows('canPlaceBet', $bet);
-        return view('community.bets.viewBet', ['bet' => $bet, 'canPlaceBet' => $canPlaceBet]);
+        return view('community.bets.viewBet', ['bet' => $bet, 'canPlaceBet' => $canPlaceBet, 'placedBets' => $placedBets]);
     }
 
     public function createBetView(string $id): View
@@ -25,9 +30,9 @@ class BetViewController
 
     public function placeBetView(string $id): View
     {
-        $bet = Bet::find($id);
+        $bet = Bet::with('answer')->find($id);
         Gate::authorize('read', $bet);
-        return view('community.bets.placeBet', ['betId' => $id]);
+        return view('community.bets.placeBet', ['bet' => $bet]);
     }
 
 }

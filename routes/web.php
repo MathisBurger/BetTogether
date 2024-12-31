@@ -34,4 +34,5 @@ Route::middleware([
     Route::post('/communities/{community}/create-bet', [BetActionController::class, 'create'])->name('create-bet-action');
     Route::get('/bets/{bet}', [BetViewController::class, 'viewBet'])->name('view-bet');
     Route::get('/bets/{bet}/place', [BetViewController::class, 'placeBetView'])->name('view-place-bet');
+    Route::post('/bets/{bet}/place', [BetActionController::class, 'place'])->name('place-bet-action');
 });

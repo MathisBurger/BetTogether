@@ -98,7 +98,7 @@
                 </tbody>
             </table>
 
-            {{ $activeBets->links() }}
+            {{ $pastBets->links() }}
         @endif
 
 

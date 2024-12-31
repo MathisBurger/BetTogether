@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
     <x-main-content-card>
-        <h1 class="font-bold" style="font-size: 2em;">{{$bet->betText}}</h1>
+        <h1 class="font-bold mt-2" style="font-size: 2em;">{{$bet->betText}}</h1>
         <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium" style="color: #1e40af; background: #dbeafe">
             {{$bet->determinationStrategy}}
         </span>
@@ -34,6 +34,15 @@
                     <th>Points</th>
                 </tr>
             </thead>
+            <tbody>
+                @foreach($placedBets as $placedBet)
+                    <tr>
+                        <td>{{$placedBet->user->name}}</td>
+                        <td>{{$placedBet->answer->type}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+            {{ $placedBets->links() }}
         </table>
     </x-main-content-card>
 </x-app-layout>
