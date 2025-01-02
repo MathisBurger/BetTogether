@@ -4,6 +4,7 @@ use App\Http\Controllers\BetActionController;
 use App\Http\Controllers\BetViewController;
 use App\Http\Controllers\CommunityActionController;
 use App\Http\Controllers\CommunityViewController;
+use App\Http\Controllers\LeaderboardActionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,4 +36,7 @@ Route::middleware([
     Route::get('/bets/{bet}', [BetViewController::class, 'viewBet'])->name('view-bet');
     Route::get('/bets/{bet}/place', [BetViewController::class, 'placeBetView'])->name('view-place-bet');
     Route::post('/bets/{bet}/place', [BetActionController::class, 'place'])->name('place-bet-action');
+
+    // Leaderboard
+    Route::post('/communities/{community}/leaderboards', [LeaderboardActionController::class, 'createLeaderboard'])->name('create-leaderboard-action');
 });

@@ -38,6 +38,11 @@ class CommunityPolicy implements PolicyInterface
         };
     }
 
+    public function canCreateLeaderboard(User $authUser, Community $community): bool
+    {
+        return $this->update($authUser, $community);
+    }
+
     public function join(User $authUser, Community $community): bool
     {
         if ($community->members()->where('member_id', $authUser->id)->exists()) {

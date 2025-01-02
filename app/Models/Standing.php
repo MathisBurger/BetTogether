@@ -17,7 +17,8 @@ class Standing extends Model
         'rank',
         'points',
         'diffPointsToLastBet',
-        'diffRanksToLastBet'
+        'diffRanksToLastBet',
+        'leaderboard_id'
     ];
 
     public function user(): BelongsTo

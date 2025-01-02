@@ -19,7 +19,8 @@ class Leaderboard extends Model
         'name',
         'periodStart',
         'periodEnd',
-        'isAllTime'
+        'isAllTime',
+        'community_id'
     ];
 
     public function community(): BelongsTo
