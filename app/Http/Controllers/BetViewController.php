@@ -20,7 +20,8 @@ class BetViewController
             ->where('bet_id', $id)
             ->paginate(50);
         $canPlaceBet = Gate::allows('canPlaceBet', $bet);
-        return view('community.bets.viewBet', ['bet' => $bet, 'canPlaceBet' => $canPlaceBet, 'placedBets' => $placedBets]);
+        $canDetermineBet = Gate::allows('canDetermineBet', $bet);
+        return view('community.bets.viewBet', ['bet' => $bet, 'canPlaceBet' => $canPlaceBet, 'placedBets' => $placedBets, 'canDetermineBet' => $canDetermineBet]);
     }
 
     public function createBetView(string $id): View

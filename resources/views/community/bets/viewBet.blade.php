@@ -25,6 +25,13 @@
                 </x-link>
             </div>
         @endif
+        @if($canDetermineBet)
+            <div class="mt-1">
+                <x-link href="{{route('view-place-bet', $bet->id)}}">
+                    Determine bet
+                </x-link>
+            </div>
+        @endif
         <table class="table">
             <thead>
                 <tr>

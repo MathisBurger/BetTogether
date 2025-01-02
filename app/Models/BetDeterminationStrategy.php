@@ -7,7 +7,6 @@ namespace App\Models;
  */
 enum BetDeterminationStrategy: string
 {
-    case DiffOrder = 'diff_order';
     case DiffGradient = 'diff_gradient';
     case ExactMatch = 'exact_match';
     case Manual = 'manual';

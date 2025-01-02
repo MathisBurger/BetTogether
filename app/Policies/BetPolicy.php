@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Bet;
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Support\Facades\Gate;
 use Nette\NotImplementedException;
 
@@ -37,6 +38,12 @@ class BetPolicy implements PolicyInterface
         return Gate::allows('read', $bet)
             && !$bet->placedBets()->where('user_id', auth()->id())->exists()
             && $bet->endDateTime->isAfter(now());
+    }
+
+    public function canDetermineBet(User $user, Bet $bet): bool
+    {
+        return Gate::allows('read', $bet)
+            && Gate::allows('createBet', $bet->community) && !$bet->isDeterminated;
     }
 
     public static function registerOther(): void
