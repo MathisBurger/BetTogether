@@ -5,6 +5,8 @@ namespace App\Actions;
 use App\Models\BetCreationPolicy;
 use App\Models\Community;
 use App\Models\CommunityJoinPolicy;
+use App\Models\Leaderboard;
+use App\Models\Standing;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
@@ -78,10 +80,25 @@ class CommunityActions
      */
     public function join(string $id): Community
     {
+        /** @var Community $community */
         $community = Community::where('id', $id)->firstOrFail();
         Gate::authorize('join', $community);
         $community->members()->attach(Auth::id());
         $community->save();
+
+        /** @var Leaderboard $leaderboard */
+        foreach ($community->leaderboards as $leaderboard) {
+            $rank = $leaderboard->standings()->count()+1;
+            Standing::create([
+                'leaderboard_id' => $leaderboard->id,
+                'user_id' => Auth::id(),
+                'rank' => $rank,
+                'points' => 0,
+                'diffPointsToLastBet' => 0,
+                'diffRanksToLastBet' => 0
+            ]);
+        }
+
         return $community;
     }
 

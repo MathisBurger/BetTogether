@@ -30,8 +30,8 @@ class CommunityViewController
     public function communitiesView(): View
     {
         $communities = Community::where('admin_id', '=', Auth::id())
-            ->whereHas('members', function ($query) {
-                $query->orWhere('member_id', Auth::id());
+            ->orWhereHas('members', function ($query) {
+                $query->where('member_id', Auth::id());
             })
             ->paginate(50);
         return view('community.communitiesView', ['communities' => $communities]);
