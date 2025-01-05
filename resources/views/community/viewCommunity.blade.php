@@ -18,6 +18,37 @@
         @if(request()->get('tab') === 'Dashboard')
             @if(Gate::allows('canCreateLeaderboard', $community))
                 <x-link href="{{route('create-leaderboard-view', $community->id)}}">Create Leaderboard</x-link>
+                <div class="row mt-3 mb-3">
+                    @foreach($leaderboards as $leaderboard)
+                        <div class="col col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>{{$leaderboard['name']}}</h5>
+                                    <hr />
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Rank</th>
+                                                <th>Name</th>
+                                                <th>Points</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($leaderboard['standings'] as $standing)
+                                            <tr>
+                                                <td>{{ $standing->rank }}</td>
+                                                <td>{{ $standing->user->name }}</td>
+                                                <td>{{$standing->points}}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                    {{$leaderboard['standings']->links()}}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             @endif
         @endif
         @if(request()->get('tab') === 'Members')
