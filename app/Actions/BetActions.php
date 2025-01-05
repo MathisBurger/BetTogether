@@ -139,7 +139,9 @@ FROM placed_bets AS pb2
         WHERE bets.id = ?;', [$bet->id, $bet->totalPoints, $bet->id]);
             }
         } else {
-            // TODO: Implement manual matching
+            foreach ($data as $singleBetData) {
+                DB::update('UPDATE placed_bets SET points = ? WHERE id = ?', [$singleBetData->points, $singleBetData->placed_bet_id]);
+            }
         }
 
         // TODO: Rerank in leaderboards
