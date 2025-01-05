@@ -1,4 +1,4 @@
-@props(['name' => ''])
+@props(['name' => '', 'id' => null])
 
-<input type="date" class="form-control" name="{{$name}}">
+<input type="date" class="form-control" name="{{$name}}" id="{{$id}}">
 

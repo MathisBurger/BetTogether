@@ -16,7 +16,9 @@
         <x-tabs :tabs="['Dashboard', 'Members', 'Active bets', 'Past bets']"/>
 
         @if(request()->get('tab') === 'Dashboard')
-            Hier kommt ein Dashboard hin
+            @if(Gate::allows('canCreateLeaderboard', $community))
+                <x-link href="{{route('create-leaderboard-view', $community->id)}}">Create Leaderboard</x-link>
+            @endif
         @endif
         @if(request()->get('tab') === 'Members')
             <table class="table">

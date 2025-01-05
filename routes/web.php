@@ -5,6 +5,7 @@ use App\Http\Controllers\BetViewController;
 use App\Http\Controllers\CommunityActionController;
 use App\Http\Controllers\CommunityViewController;
 use App\Http\Controllers\LeaderboardActionController;
+use App\Http\Controllers\LeaderboardViewController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -39,4 +40,5 @@ Route::middleware([
 
     // Leaderboard
     Route::post('/communities/{community}/leaderboards', [LeaderboardActionController::class, 'createLeaderboard'])->name('create-leaderboard-action');
+    Route::get('/communities/{community}/createLeaderboard', [LeaderboardViewController::class, 'createLeaderboardView'])->name('create-leaderboard-view');
 });
