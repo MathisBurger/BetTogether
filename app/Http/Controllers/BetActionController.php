@@ -25,4 +25,11 @@ readonly class BetActionController
         return redirect(route('view-bet', $bet));
     }
 
+    public function determine(string $id, Request $request): RedirectResponse
+    {
+        $this->actions->determineBet($id, $request->all());
+        $bet = Bet::find($id);
+        return redirect(route('view-bet', $bet));
+    }
+
 }

@@ -37,6 +37,8 @@ Route::middleware([
     Route::get('/bets/{bet}', [BetViewController::class, 'viewBet'])->name('view-bet');
     Route::get('/bets/{bet}/place', [BetViewController::class, 'placeBetView'])->name('view-place-bet');
     Route::post('/bets/{bet}/place', [BetActionController::class, 'place'])->name('place-bet-action');
+    Route::get('/bets/{bet}/determine', [BetViewController::class, 'determineBetView'])->name('view-determine-bet');
+    Route::post('/bets/{bet}/determine', [BetActionController::class, 'determine'])->name('determine-bet-action');
 
     // Leaderboard
     Route::post('/communities/{community}/leaderboards', [LeaderboardActionController::class, 'createLeaderboard'])->name('create-leaderboard-action');

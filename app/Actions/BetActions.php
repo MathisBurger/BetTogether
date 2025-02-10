@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Enum;
-use Nette\NotImplementedException;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 /**
  * All actions on a bet used within this platform
@@ -90,10 +88,10 @@ class BetActions {
         }
 
         if ($bet->determinationStrategy === BetDeterminationStrategy::ExactMatch->value) {
-            DB::update('UPDATE placed_bets SET points = ?
-                   FROM placed_bets
+            DB::update('UPDATE placed_bets SET points = ? WHERE id = (SELECT placed_bets.id FROM placed_bets
                    JOIN public.bet_answers ba on placed_bets.id = ba.placed_bet_id
-                   WHERE bet_id = ? AND ba."' . $bet->answer->type .'Value" = ?', [$bet->totalPoints, $bet->id, $data['value']]);
+                   WHERE placed_bets.bet_id = ? AND ba."' . $bet->answer->type .'Value" = ?)'
+                    , [$bet->totalPoints, $bet->id, $data['value']]);
         } elseif ($bet->determinationStrategy === BetDeterminationStrategy::DiffGradient->value) {
             if ($bet->answer->type === ResultType::String->value) {
                 DB::update('WITH min_max_diff AS (

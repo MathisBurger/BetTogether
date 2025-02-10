@@ -36,4 +36,11 @@ class BetViewController
         return view('community.bets.placeBet', ['bet' => $bet]);
     }
 
+    public function determineBetView(string $id): View
+    {
+        $bet = Bet::with('answer')->find($id);
+        Gate::authorize('canDetermineBet', $bet);
+        return view('community.bets.determineBet', ['bet' => $bet]);
+    }
+
 }

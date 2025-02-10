@@ -51,7 +51,7 @@ class LeaderboardActions
 
 
         $inserts = array_map(function ($standing, $rank) use ($leaderboard) {
-            return ['id' => Str::uuid() , 'rank' => $rank+1, 'points' => $standing['total_points'], 'user_id' => $standing['id'], 'leaderboard_id' => $leaderboard->id, 'diffPointsToLastBet' => 0, 'diffRanksToLastBet' => 0];
+            return ['id' => Str::uuid() , 'rank' => $rank+1, 'points' => $standing['total_points'] ?? 0, 'user_id' => $standing['id'], 'leaderboard_id' => $leaderboard->id, 'diffPointsToLastBet' => 0, 'diffRanksToLastBet' => 0];
         }, $standings->toArray(), array_keys($standings->toArray()));
 
         Standing::insert($inserts);
