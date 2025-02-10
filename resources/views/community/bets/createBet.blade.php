@@ -23,7 +23,6 @@
                 <div class="mt-4">
                     <x-label value="{{ __('Determination strategy') }}" />
                     <x-select name="determinationStrategy">
-                        <option value="diff_order">Order</option>
                         <option value="diff_gradient">Gradient</option>
                         <option value="exact_match">Exact match</option>
                         <option value="manual">Manual</option>
