@@ -18,6 +18,7 @@ class BetViewController
         $placedBets = PlacedBet::with('answer')
             ->with('user')
             ->where('bet_id', $id)
+            ->orderByDesc('points')
             ->paginate(50);
         $canPlaceBet = Gate::allows('canPlaceBet', $bet);
         $canDetermineBet = Gate::allows('canDetermineBet', $bet);

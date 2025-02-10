@@ -88,10 +88,14 @@ class BetActions {
         }
 
         if ($bet->determinationStrategy === BetDeterminationStrategy::ExactMatch->value) {
-            DB::update('UPDATE placed_bets SET points = ? WHERE id = (SELECT placed_bets.id FROM placed_bets
+            DB::update('UPDATE placed_bets SET points = ? WHERE id IN (SELECT placed_bets.id FROM placed_bets
                    JOIN public.bet_answers ba on placed_bets.id = ba.placed_bet_id
                    WHERE placed_bets.bet_id = ? AND ba."' . $bet->answer->type .'Value" = ?)'
                     , [$bet->totalPoints, $bet->id, $data['value']]);
+            DB::update('UPDATE placed_bets SET points = 0 WHERE id NOT IN (SELECT placed_bets.id FROM placed_bets
+                   JOIN public.bet_answers ba on placed_bets.id = ba.placed_bet_id
+                   WHERE placed_bets.bet_id = ? AND ba."' . $bet->answer->type .'Value" = ?)'
+                , [$bet->id, $data['value']]);
         } elseif ($bet->determinationStrategy === BetDeterminationStrategy::DiffGradient->value) {
             if ($bet->answer->type === ResultType::String->value) {
                 DB::update('WITH min_max_diff AS (
@@ -143,6 +147,9 @@ FROM placed_bets AS pb2
         }
 
         // TODO: Rerank in leaderboards
+
+        $bet->isDeterminated = true;
+        $bet->save();
         return $bet;
     }
 }

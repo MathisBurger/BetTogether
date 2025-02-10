@@ -42,10 +42,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($placedBets as $placedBet)
+                @foreach($placedBets as $placement => $placedBet)
                     <tr>
                         <td>{{$placedBet->user->name}}</td>
                         <td><x-answer-display :answer="$placedBet->answer" /></td>
+                        <td>{{$placement+1}}</td>
+                        <td>{{$placedBet->points}}</td>
                     </tr>
                 @endforeach
             </tbody>

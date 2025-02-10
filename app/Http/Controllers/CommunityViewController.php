@@ -49,12 +49,12 @@ class CommunityViewController
 
         $activeBets = Bet::with('creator')->whereHas('community', function($query) use ($id) {
             $query->where('id', $id);
-        })->where('endDateTime', '>', Carbon::now())->paginate(50);
+        })->where('endDateTime', '>', Carbon::now())->where('isDeterminated', false)->paginate(50);
         $activeBets->appends(request()->except('page'));
 
         $pastBets = Bet::with('creator')->whereHas('community', function($query) use ($id) {
             $query->where('id', $id);
-        })->where('endDateTime', '<=', Carbon::now())->paginate(50);
+        })->where('endDateTime', '<=', Carbon::now())->orWhere('isDeterminated', true)->paginate(50);
         $pastBets->appends(request()->except('page'));
 
         /** @var Collection $leaderboardObjects */
