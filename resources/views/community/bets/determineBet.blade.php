@@ -16,7 +16,7 @@
                     <x-input type="number" name="value" />
                 @elseif($bet->answer->type === ResultType::Float->value)
                     <x-label value="{{ __('Answer (Number)') }}" />
-                    <x-input type="number" name="value" />
+                    <x-input type="number" name="value" step="0.01" />
                 @elseif($bet->answer->type === ResultType::String->value)
                     <x-label value="{{ __('Answer (String)') }}" />
                     <x-input type="text" name="value" />
