@@ -94,8 +94,8 @@ class BetActions {
                     , [$bet->totalPoints, $bet->id, $data['value']]);
             DB::update('UPDATE placed_bets SET points = 0 WHERE id NOT IN (SELECT placed_bets.id FROM placed_bets
                    JOIN public.bet_answers ba on placed_bets.id = ba.placed_bet_id
-                   WHERE placed_bets.bet_id = ? AND ba."' . $bet->answer->type .'Value" = ?)'
-                , [$bet->id, $data['value']]);
+                   WHERE placed_bets.bet_id = ? AND ba."' . $bet->answer->type .'Value" = ?) AND placed_bets.bet_id = ?'
+                , [$bet->id, $data['value'], $bet->id]);
         } elseif ($bet->determinationStrategy === BetDeterminationStrategy::DiffGradient->value) {
             if ($bet->answer->type === ResultType::String->value) {
                 DB::update('WITH min_max_diff AS (
@@ -119,26 +119,11 @@ FROM placed_bets AS pb2
          JOIN bet_answers resAns ON resAns.bet_id = bets.id
 WHERE bets.id = ?', [$bet->id, $bet->totalPoints, $bet->id]);
             } else {
-                DB::update('WITH min_max_diff AS (
-    SELECT
-        MIN(ABS(resAns1."' . $bet->answer->type . 'Value" - ans1."' . $bet->answer->type . 'Value")) AS min_diff,
-        MAX(ABS(resAns1."' . $bet->answer->type . 'Value" - ans1."' . $bet->answer->type . 'Value")) AS max_diff
-    FROM placed_bets AS pb_1
-    JOIN bet_answers ans1 ON pb_1.id = ans1.placed_bet_id
-    JOIN bets ON pb_1.bet_id = bets.id
-    JOIN bet_answers resAns1 ON resAns1.bet_id = bets.id
-    WHERE bets.id = ?
-)
-UPDATE placed_bets AS pb1
-SET points = (
-    ? * (ABS(resAns."' . $bet->answer->type . 'Value" - resAns."' . $bet->answer->type . 'Value") - (SELECT min_diff FROM min_max_diff)) /
-    (SELECT max_diff - min_diff FROM min_max_diff)
+                $maxDiff = DB::select('SELECT MAX(ABS(? - ans1."' . $bet->answer->type . 'Value")) AS max_diff FROM placed_bets AS pb_1 JOIN bet_answers ans1 ON pb_1.id = ans1.placed_bet_id JOIN bets ON pb_1.bet_id = bets.id WHERE bets.id = ?', [$data['value'], $bet->id])[0]->max_diff;
+                DB::update('UPDATE placed_bets SET points = (
+    ? - ? * (CAST(ABS((SELECT "' . $bet->answer->type . 'Value" FROM bet_answers WHERE placed_bet_id = placed_bets.id) - ?) AS FLOAT) / CAST(? AS FLOAT))
     )
-FROM placed_bets AS pb2
-         JOIN bet_answers ans ON pb2.id = ans.placed_bet_id
-         JOIN bets ON pb2.bet_id = bets.id
-         JOIN bet_answers resAns ON resAns.bet_id = bets.id
-        WHERE bets.id = ?;', [$bet->id, $bet->totalPoints, $bet->id]);
+WHERE placed_bets.bet_id = ?', [$bet->totalPoints, $bet->totalPoints, $data['value'], $maxDiff, $bet->id]);
             }
         } else {
             foreach ($data as $singleBetData) {
@@ -148,6 +133,7 @@ FROM placed_bets AS pb2
 
         // TODO: Rerank in leaderboards
 
+        // TODO: Set answer
         $bet->isDeterminated = true;
         $bet->save();
         return $bet;
