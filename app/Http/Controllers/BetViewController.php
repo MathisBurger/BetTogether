@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bet;
+use App\Models\BetDeterminationStrategy;
 use App\Models\PlacedBet;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
@@ -41,7 +42,13 @@ class BetViewController
     {
         $bet = Bet::with('answer')->find($id);
         Gate::authorize('canDetermineBet', $bet);
-        return view('community.bets.determineBet', ['bet' => $bet]);
+
+        $placedBets = [];
+        if ($bet->determinationStrategy === BetDeterminationStrategy::Manual->value) {
+            $placedBets = PlacedBet::with('answer')->where('bet_id', $bet->id)->get();
+        }
+
+        return view('community.bets.determineBet', ['bet' => $bet, 'placedBets' => $placedBets]);
     }
 
 }

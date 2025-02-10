@@ -78,8 +78,8 @@ class BetActions {
         Gate::authorize('canDetermineBet', $bet);
         if ($bet->determinationStrategy === BetDeterminationStrategy::Manual->value) {
             Validator::make($data, [
-                '*.placed_bet_id' => ['string', 'exists:placed_bets,id'],
-                '*.points' => ['integer', 'min:0'],
+                'bets.*.placed_bet_id' => ['string', 'exists:placed_bets,id'],
+                'bets.*.points' => ['integer', 'min:0', 'max:' . $bet->totalPoints],
             ])->validate();
         } else {
             Validator::make($data, [
@@ -111,8 +111,8 @@ WHERE placed_bets.bet_id = ?', [$bet->totalPoints, $bet->totalPoints, $data['val
 WHERE placed_bets.bet_id = ?', [$bet->totalPoints, $bet->totalPoints, $data['value'], $maxDiff, $bet->id]);
             }
         } else {
-            foreach ($data as $singleBetData) {
-                DB::update('UPDATE placed_bets SET points = ? WHERE id = ?', [$singleBetData->points, $singleBetData->placed_bet_id]);
+            foreach ($data['bets'] as $singleBetData) {
+                DB::update('UPDATE placed_bets SET points = ? WHERE id = ?', [$singleBetData['points'], $singleBetData['placed_bet_id']]);
             }
         }
 

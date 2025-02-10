@@ -11,15 +11,40 @@
             <form method="POST" action="{{ route('determine-bet-action', $bet->id) }}">
                 @csrf
                 <p>{{$bet->betText}}</p>
-                @if ($bet->answer->type === ResultType::Integer->value)
-                    <x-label value="{{ __('Answer (Number)') }}" />
-                    <x-input type="number" name="value" />
-                @elseif($bet->answer->type === ResultType::Float->value)
-                    <x-label value="{{ __('Answer (Number)') }}" />
-                    <x-input type="number" name="value" step="0.01" />
-                @elseif($bet->answer->type === ResultType::String->value)
-                    <x-label value="{{ __('Answer (String)') }}" />
-                    <x-input type="text" name="value" />
+                @if($bet->determinationStrategy === \App\Models\BetDeterminationStrategy::Manual->value)
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Answer</th>
+                                <th>Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($placedBets as $index => $placedBet)
+                            <tr>
+                                <td><x-answer-display :answer="$placedBet->answer" /></td>
+                                <td>
+                                    <input style="display: none" name="{{'bets[' . $index . '][placed_bet_id]'}}" value="{{$placedBet->id}}" />
+                                    <x-input type="number" name="{{'bets[' . $index . '][points]'}}" max="{{$bet->totalPoints}}" />
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    @foreach($placedBets as $placedBet)
+
+                    @endforeach
+                @else
+                    @if ($bet->answer->type === ResultType::Integer->value)
+                        <x-label value="{{ __('Answer (Number)') }}" />
+                        <x-input type="number" name="value" />
+                    @elseif($bet->answer->type === ResultType::Float->value)
+                        <x-label value="{{ __('Answer (Number)') }}" />
+                        <x-input type="number" name="value" step="0.01" />
+                    @elseif($bet->answer->type === ResultType::String->value)
+                        <x-label value="{{ __('Answer (String)') }}" />
+                        <x-input type="text" name="value" />
+                    @endif
                 @endif
                 <div class="flex items-center justify-end mt-4">
                     <x-button class="ms-4">
