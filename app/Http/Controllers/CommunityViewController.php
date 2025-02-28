@@ -60,7 +60,7 @@ class CommunityViewController
         /** @var Collection $leaderboardObjects */
         $leaderboardObjects = Leaderboard::where('community_id', $id)->get();
         $leaderboards = $leaderboardObjects->map(function ($leaderboardObject) {
-            $standings = Standing::with('user')->where('leaderboard_id', $leaderboardObject->id)->paginate(50, pageName: $leaderboardObject->id);
+            $standings = Standing::with('user')->where('leaderboard_id', $leaderboardObject->id)->orderBy('rank')->paginate(50, pageName: $leaderboardObject->id);
             $standings->appends(request()->except($leaderboardObject->id));
             return [
                 'name' => $leaderboardObject->name,

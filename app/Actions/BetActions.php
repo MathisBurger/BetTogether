@@ -9,6 +9,7 @@ use App\Models\BetDeterminationStrategy;
 use App\Models\Community;
 use App\Models\PlacedBet;
 use App\Models\ResultType;
+use App\Service\RankingService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -19,6 +20,13 @@ use Illuminate\Validation\Rules\Enum;
  * All actions on a bet used within this platform
  */
 class BetActions {
+
+    public function __construct(
+        private readonly RankingService $rankingService
+    )
+    {
+
+    }
 
     public function createBet(string $id, array $data): Bet
     {
@@ -116,7 +124,7 @@ WHERE placed_bets.bet_id = ?', [$bet->totalPoints, $bet->totalPoints, $data['val
             }
         }
 
-        // TODO: Rerank in leaderboards
+        $this->rankingService->updateRankingsForCommunity($bet->community);
 
         $bet->isDeterminated = true;
         $bet->save();
