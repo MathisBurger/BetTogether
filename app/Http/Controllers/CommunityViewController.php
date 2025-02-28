@@ -39,6 +39,10 @@ class CommunityViewController
 
     public function viewCommunity(string $id): View
     {
+        if (request()->get('tab') === null) {
+            request()->merge(['tab'  => 'Dashboard']);
+        }
+
         $community = Community::where('id', $id)->first();
 
         Gate::authorize('read', $community);
