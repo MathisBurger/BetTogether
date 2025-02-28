@@ -131,9 +131,7 @@ WHERE placed_bets.bet_id = ?', [$bet->totalPoints, $bet->totalPoints, $data['val
 
         // Create the correct answer on bet if exists
         if ($bet->determinationStrategy !== BetDeterminationStrategy::Manual->value) {
-            BetAnswer::create([
-                'bet_id' => $bet->id,
-                'type' => $bet->answer->type,
+            $bet->answer->update([
                 'stringValue' => $bet->answer->type === ResultType::String->value ? $data['value'] : null,
                 'integerValue' => $bet->answer->type === ResultType::Integer->value ? $data['value'] : null,
                 'floatValue' => $bet->answer->type === ResultType::Float->value ? $data['value'] : null,
