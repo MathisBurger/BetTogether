@@ -30,6 +30,10 @@
                     </tbody>
                 </table>
 
+                @if(count($communities) === 0)
+                    <x-alert message="You are not a member of an community" />
+                @endif
+
                 {{ $communities->links() }}
             </div>
         </div>

@@ -103,6 +103,10 @@
                 </tbody>
             </table>
 
+            @if(count($activeBets) === 0)
+                <x-alert message="There are no active bets" />
+            @endif
+
             {{ $activeBets->links() }}
         @endif
 
@@ -134,6 +138,10 @@
                 @endforeach
                 </tbody>
             </table>
+
+            @if(count($pastBets) === 0)
+                <x-alert message="There are no past bets" />
+            @endif
 
             {{ $pastBets->links() }}
         @endif

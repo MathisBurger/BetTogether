@@ -32,6 +32,11 @@
                     </tbody>
                 </table>
 
+                @if(count($communities) === 0)
+                    <x-alert message="No communities found" />
+                @endif
+
+
                 {{ $communities->links() }}
             </div>
         </div>
