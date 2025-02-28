@@ -1,3 +1,4 @@
+@php use App\Utility\BacklinkUtility; @endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -6,6 +7,7 @@
     </x-slot>
     <div class="py-12">
         <x-card>
+            <x-backlink href="{{BacklinkUtility::generateCommunityViewBacklink($communityId)}}" />
             <x-validation-errors class="mb-4" />
             <form method="POST" action="{{ route('create-bet-action', $communityId) }}">
                 @csrf

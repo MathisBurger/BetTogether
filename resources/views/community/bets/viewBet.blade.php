@@ -1,3 +1,4 @@
+@php use App\Utility\BacklinkUtility; @endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -5,6 +6,9 @@
         </h2>
     </x-slot>
     <x-main-content-card>
+        <div class="mt-2">
+            <x-backlink href="{{BacklinkUtility::generateCommunityViewBacklink($bet->community_id)}}" />
+        </div>
         <h1 class="font-bold mt-2" style="font-size: 2em;">{{$bet->betText}}</h1>
         <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium" style="color: #1e40af; background: #dbeafe">
             {{$bet->determinationStrategy}}
