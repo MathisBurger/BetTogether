@@ -35,7 +35,6 @@ readonly class RankingService
             })
             ->get();
         foreach ($leaderboards as $leaderboard) {
-            var_dump($leaderboard);
             $this->updateRanking($leaderboard);
         }
     }
@@ -47,8 +46,19 @@ readonly class RankingService
         if (count($leaderboardStandings) !== count($calculatedStandings)) {
             return;
         }
+        $userChangeMap = [];
+        foreach ($leaderboardStandings as $leaderboardStanding) {
+            $userChangeMap[$leaderboardStanding->user_id] = ['rank' => $leaderboardStanding->rank, 'points' => $leaderboardStanding->points];
+        }
         for ($i = 0; $i < count($calculatedStandings); $i++) {
-            $leaderboardStandings[$i]->update(['points' => $calculatedStandings[$i]['total_points'], 'user_id' => $calculatedStandings[$i]['id']]);
+            $points = $calculatedStandings[$i]['total_points'];
+            $userId = $calculatedStandings[$i]['id'];
+            $leaderboardStandings[$i]->update([
+                'points' => $points,
+                'user_id' => $userId,
+                'diffPointsToLastBet' => $points - $userChangeMap[$userId]['points'],
+                'diffRanksToLastBet' =>  $userChangeMap[$userId]['rank'] - $leaderboardStandings[$i]->rank,
+            ]);
         }
     }
 

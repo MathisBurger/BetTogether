@@ -32,6 +32,8 @@
                                             <th>Rank</th>
                                             <th>Name</th>
                                             <th>Points</th>
+                                            <th>Point diff</th>
+                                            <th>Rank diff</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -40,6 +42,8 @@
                                                 <td>{{ $standing->rank }}</td>
                                                 <td>{{ $standing->user->name }}</td>
                                                 <td>{{$standing->points}}</td>
+                                                <td>{{$standing->diffPointsToLastBet}}</td>
+                                                <td>{{$standing->diffRanksToLastBet}}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>
