@@ -6,6 +6,7 @@ use App\Models\Community;
 use App\Models\Leaderboard;
 use App\Models\Standing;
 use App\Models\User;
+use App\Service\RankingService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -17,6 +18,12 @@ use Illuminate\Support\Str;
  */
 class LeaderboardActions
 {
+
+    public function __construct(
+        private readonly RankingService $rankingService,
+    )
+    {}
+
     public function create(string $id, array $data): Leaderboard
     {
         $community = Community::find($id);
@@ -37,24 +44,12 @@ class LeaderboardActions
             'isAllTime' => $isAllTime,
         ]);
 
-        $baseQuery = User::selectRaw('users.id, SUM(placed_bets.points) as total_points')
-            ->join('placed_bets', 'placed_bets.user_id', '=', 'users.id')
-            ->join('bets', 'placed_bets.bet_id', '=', 'bets.id')
-            ->where('bets.community_id', $community->id);
-        if (!$leaderboard->isAllTime) {
-            $baseQuery = $baseQuery->whereBetween('placed_bets.created_at', [Carbon::parse($data['periodStart']), Carbon::parse($data['periodEnd'])]);
-        }
-        $standings = $baseQuery
-            ->groupBy('users.id')
-            ->orderByDesc('total_points')
-            ->get();
-
-
-        $inserts = array_map(function ($standing, $rank) use ($leaderboard) {
-            return ['id' => Str::uuid() , 'rank' => $rank+1, 'points' => $standing['total_points'] ?? 0, 'user_id' => $standing['id'], 'leaderboard_id' => $leaderboard->id, 'diffPointsToLastBet' => 0, 'diffRanksToLastBet' => 0];
-        }, $standings->toArray(), array_keys($standings->toArray()));
-
-        Standing::insert($inserts);
+        $this->rankingService->createRanking(
+            $community,
+            $leaderboard,
+            $data['periodStart'] ? Carbon::parse($data['periodStart']) : null,
+            $data['periodEnd'] ? Carbon::parse($data['periodEnd']) : null,
+        );
 
         return $leaderboard;
     }
