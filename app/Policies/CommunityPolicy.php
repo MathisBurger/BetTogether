@@ -50,9 +50,8 @@ class CommunityPolicy implements PolicyInterface
     /**
      * Checks if a user can create a bet on a community
      *
-     * @param User $authUser The user that wants to perform the action
-     * @param Community $community The community that the bet should be created on
-     * @return bool
+     * @param  User  $authUser  The user that wants to perform the action
+     * @param  Community  $community  The community that the bet should be created on
      */
     public function createBet(User $authUser, Community $community): bool
     {
@@ -74,9 +73,8 @@ class CommunityPolicy implements PolicyInterface
     /**
      * Checks if a user can create a leaderboard on a community
      *
-     * @param User $authUser The user that wants to perform the action
-     * @param Community $community The community that the leaderboard should be created on
-     * @return bool
+     * @param  User  $authUser  The user that wants to perform the action
+     * @param  Community  $community  The community that the leaderboard should be created on
      */
     public function canCreateLeaderboard(User $authUser, Community $community): bool
     {
@@ -86,9 +84,8 @@ class CommunityPolicy implements PolicyInterface
     /**
      * Checks if a user can delete a leaderboard
      *
-     * @param User $authUser The user that wants to perform the action
-     * @param Community $community The community that the leaderboard should be deleted from
-     * @return bool
+     * @param  User  $authUser  The user that wants to perform the action
+     * @param  Community  $community  The community that the leaderboard should be deleted from
      */
     public function canDeleteLeaderboard(User $authUser, Community $community): bool
     {
@@ -98,9 +95,8 @@ class CommunityPolicy implements PolicyInterface
     /**
      * Checks if a user can join a community
      *
-     * @param User $authUser The user that wants to join
-     * @param Community $community The community that the user wants to join
-     * @return bool
+     * @param  User  $authUser  The user that wants to join
+     * @param  Community  $community  The community that the user wants to join
      */
     public function join(User $authUser, Community $community): bool
     {

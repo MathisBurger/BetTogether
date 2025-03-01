@@ -15,13 +15,11 @@ use Illuminate\Support\Facades\DB;
  */
 class BetService
 {
-
     /**
      * Determines an bet using native SQL queries
      *
-     * @param Bet $bet The bet that should be determinated
-     * @param array $data The form data that has been submitted
-     * @return void
+     * @param  Bet  $bet  The bet that should be determinated
+     * @param  array  $data  The form data that has been submitted
      */
     public function determineBet(Bet $bet, array $data): void
     {
@@ -50,10 +48,9 @@ class BetService
     /**
      * Determine an exact match bet.
      *
-     * @param Bet $bet The bet to determine
-     * @param BetAnswer $betAnswer The given bet answer
-     * @param array $data The form data that has been submitted
-     * @return void
+     * @param  Bet  $bet  The bet to determine
+     * @param  BetAnswer  $betAnswer  The given bet answer
+     * @param  array  $data  The form data that has been submitted
      */
     private function determineExactMatch(Bet $bet, BetAnswer $betAnswer, array $data): void
     {
@@ -68,10 +65,9 @@ class BetService
     /**
      * Determines an gradient bet that has string as answer type
      *
-     * @param Bet $bet The bet that should be determined
-     * @param BetAnswer $betAnswer The answer of the bet
-     * @param array $data The form data that has been submitted
-     * @return void
+     * @param  Bet  $bet  The bet that should be determined
+     * @param  BetAnswer  $betAnswer  The answer of the bet
+     * @param  array  $data  The form data that has been submitted
      */
     private function determineGradientString(Bet $bet, BetAnswer $betAnswer, array $data): void
     {
@@ -82,10 +78,9 @@ class BetService
     /**
      * Determines a gradient bet that has a number type as answer type
      *
-     * @param Bet $bet The bet that should be determinated
-     * @param BetAnswer $betAnswer The answer
-     * @param array $data The form data that has been submitted
-     * @return void
+     * @param  Bet  $bet  The bet that should be determinated
+     * @param  BetAnswer  $betAnswer  The answer
+     * @param  array  $data  The form data that has been submitted
      */
     private function determineGradientNumber(Bet $bet, BetAnswer $betAnswer, array $data): void
     {

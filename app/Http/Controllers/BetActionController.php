@@ -6,7 +6,6 @@ use App\Actions\BetActions;
 use App\Models\Bet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
 /**
  * Controller for bet actions

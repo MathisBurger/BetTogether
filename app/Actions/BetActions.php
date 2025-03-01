@@ -11,7 +11,6 @@ use App\Models\ResultType;
 use App\Service\BetService;
 use App\Service\RankingService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Enum;
@@ -29,10 +28,11 @@ class BetActions
 
     /**
      * Creates a new bet on a community
-     * 
-     * @param string $id The ID of the community to create the bet on
-     * @param array $data The form data that is submitted
+     *
+     * @param  string  $id  The ID of the community to create the bet on
+     * @param  array  $data  The form data that is submitted
      * @return Bet The created bet
+     *
      * @throws ValidationException Fails on form data validation
      */
     public function createBet(string $id, array $data): Bet
@@ -67,9 +67,10 @@ class BetActions
     /**
      * Places a bet on a defined bet.
      *
-     * @param string $id The ID of the bet to bet on
-     * @param array $data The form data that has been submitted
+     * @param  string  $id  The ID of the bet to bet on
+     * @param  array  $data  The form data that has been submitted
      * @return PlacedBet The placed bet
+     *
      * @throws ValidationException Fails on invalid form data
      */
     public function placeBet(string $id, array $data): PlacedBet
@@ -77,7 +78,7 @@ class BetActions
         $bet = Bet::with('answer')->where('id', $id)->firstOrFail();
         Gate::authorize('canPlaceBet', $bet);
         Validator::make($data, [
-            'value' => ['required']
+            'value' => ['required'],
         ])->validate();
 
         $placedBet = PlacedBet::create([
@@ -100,9 +101,10 @@ class BetActions
     /**
      * Determines a bet.
      *
-     * @param string $id The ID of the bet to determine
-     * @param array $data The submitted form data
+     * @param  string  $id  The ID of the bet to determine
+     * @param  array  $data  The submitted form data
      * @return Bet The determined bet
+     *
      * @throws ValidationException Validates the form data
      */
     public function determineBet(string $id, array $data): Bet

@@ -21,9 +21,10 @@ class LeaderboardActions
     /**
      * Creates a leaderboard on a community
      *
-     * @param string $id The ID of the community to create on
-     * @param array $data The submitted form data
+     * @param  string  $id  The ID of the community to create on
+     * @param  array  $data  The submitted form data
      * @return Leaderboard The created leaderboard
+     *
      * @throws ValidationException
      */
     public function create(string $id, array $data): Leaderboard
@@ -54,8 +55,7 @@ class LeaderboardActions
     /**
      * Deletes a leaderboard
      *
-     * @param Leaderboard $leaderboard The leaderboard to delete
-     * @return void
+     * @param  Leaderboard  $leaderboard  The leaderboard to delete
      */
     public function delete(Leaderboard $leaderboard): void
     {

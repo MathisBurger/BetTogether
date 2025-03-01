@@ -40,8 +40,8 @@ class BetPolicy implements PolicyInterface
     /**
      * Checks if a bet can be placed
      *
-     * @param User $user The user that wants to perform the action
-     * @param Bet $bet The bet that should be placed on
+     * @param  User  $user  The user that wants to perform the action
+     * @param  Bet  $bet  The bet that should be placed on
      * @return bool The result
      */
     public function canPlaceBet(User $user, Bet $bet): bool
@@ -57,8 +57,8 @@ class BetPolicy implements PolicyInterface
     /**
      * Checks if the current user can determine a bet
      *
-     * @param User $user The user that wants to perform the action
-     * @param Bet $bet The bet that should be determinated
+     * @param  User  $user  The user that wants to perform the action
+     * @param  Bet  $bet  The bet that should be determinated
      * @return bool The result
      */
     public function canDetermineBet(User $user, Bet $bet): bool

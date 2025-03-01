@@ -16,8 +16,7 @@ readonly class RankingService
     /**
      * Creates a ranking or a leaderboard
      *
-     * @param Leaderboard $leaderboard The leaderboard that the ranking should be created for
-     * @return void
+     * @param  Leaderboard  $leaderboard  The leaderboard that the ranking should be created for
      */
     public function createRanking(Leaderboard $leaderboard): void
     {
@@ -32,8 +31,7 @@ readonly class RankingService
     /**
      * Updates all rankings for a community
      *
-     * @param Community $community The community that contains the leaderboards
-     * @return void
+     * @param  Community  $community  The community that contains the leaderboards
      */
     public function updateRankingsForCommunity(Community $community): void
     {
@@ -54,8 +52,7 @@ readonly class RankingService
     /**
      * Updates the ranking of a leaderboard
      *
-     * @param Leaderboard $leaderboard The leaderboard that should be re-ranked
-     * @return void
+     * @param  Leaderboard  $leaderboard  The leaderboard that should be re-ranked
      */
     public function updateRanking(Leaderboard $leaderboard): void
     {
@@ -83,7 +80,7 @@ readonly class RankingService
     /**
      * Gets the current standings of a leaderboard
      *
-     * @param Leaderboard $leaderboard The leaderboard to get current standings from
+     * @param  Leaderboard  $leaderboard  The leaderboard to get current standings from
      * @return array The current standings
      */
     private function getStandings(Leaderboard $leaderboard): array

@@ -12,7 +12,7 @@ class BacklinkUtility
     /**
      * Generates backlink to a community
      *
-     * @param string $communityId The ID of the community
+     * @param  string  $communityId  The ID of the community
      * @return string The backlink
      */
     public static function generateCommunityViewBacklink(string $communityId): string
@@ -23,7 +23,7 @@ class BacklinkUtility
     /**
      * Generates backlink to a bet
      *
-     * @param Bet $bet The bet
+     * @param  Bet  $bet  The bet
      * @return string The backlink
      */
     public static function generateBetViewBacklink(Bet $bet): string
