@@ -6,17 +6,22 @@ use App\Models\BetCreationPolicy;
 use App\Models\Community;
 use App\Models\CommunityJoinPolicy;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Nette\NotImplementedException;
 
 class CommunityPolicy implements PolicyInterface
 {
     public function read(User $authUser, $object): bool
     {
-        if (! $object instanceof Community) {
+        if (!$object instanceof Community) {
             return false;
         }
 
-        return ! $object->members->filter(fn ($user) => $user->id === $authUser->id)->isEmpty() || $object->admin->id === $authUser->id;
+        /** @var User $admin */
+        $admin = $object->admin;
+        /** @var Collection<(int|string), User> $members */
+        $members = $object->members;
+        return ! $members->filter(fn (User $user) => $user->id === $authUser->id)->isEmpty() || $admin->id === $authUser->id;
     }
 
     public function update(User $authUser, $object): bool
@@ -25,15 +30,25 @@ class CommunityPolicy implements PolicyInterface
             return false;
         }
 
-        return $object->admin->id === $authUser->id;
+        /** @var User $admin */
+        $admin = $object->admin;
+
+        return $admin->id === $authUser->id;
     }
 
     public function createBet(User $authUser, Community $community): bool
     {
+        /** @var User $admin */
+        $admin = $community->admin;
+        /** @var Collection<int|string, User> $betCreators */
+        $betCreators = $community->betCreators;
+        /** @var Collection<int|string, User> $members */
+        $members = $community->members;
+
         return match ($community->betCreationPolicy) {
-            BetCreationPolicy::AdminOnly->value => $community->admin->id === $authUser->id,
-            BetCreationPolicy::Creators->value => $community->betCreators->filter(fn ($user) => $user->id === $authUser->id),
-            BetCreationPolicy::Everyone->value => $community->members->filter(fn ($user) => $user->id === $authUser->id),
+            BetCreationPolicy::AdminOnly->value => $admin->id === $authUser->id,
+            BetCreationPolicy::Creators->value => $betCreators->filter(fn (User $user) => $user->id === $authUser->id),
+            BetCreationPolicy::Everyone->value => $members->filter(fn (User $user) => $user->id === $authUser->id),
             default => false,
         };
     }

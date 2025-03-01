@@ -61,10 +61,10 @@ class CommunityViewController
         })->where('endDateTime', '<=', Carbon::now())->orWhere('isDeterminated', true)->paginate(50);
         $pastBets->appends(request()->except('page'));
 
-        /** @var Collection $leaderboardObjects */
+        /** @var Collection<(int|string), Leaderboard> $leaderboardObjects */
         $leaderboardObjects = Leaderboard::where('community_id', $id)->get();
-        $leaderboards = $leaderboardObjects->map(function ($leaderboardObject) {
-            $standings = Standing::with('user')->where('leaderboard_id', $leaderboardObject->id)->orderBy('rank')->paginate(50, pageName: $leaderboardObject->id);
+        $leaderboards = $leaderboardObjects->map(function (Leaderboard $leaderboardObject) {
+            $standings = Standing::with('user')->where('leaderboard_id', $leaderboardObject->id)->orderBy('rank')->paginate(50, pageName: ''.$leaderboardObject->id);
             $standings->appends(request()->except($leaderboardObject->id));
 
             return [

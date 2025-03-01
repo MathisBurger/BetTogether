@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Bet;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Nette\NotImplementedException;
 
@@ -35,9 +36,11 @@ class BetPolicy implements PolicyInterface
 
     public function canPlaceBet(User $user, Bet $bet): bool
     {
+        /** @var Carbon $endDateTime */
+        $endDateTime = $bet->endDateTime;
         return Gate::allows('read', $bet)
             && ! $bet->placedBets()->where('user_id', auth()->id())->exists()
-            && $bet->endDateTime->isAfter(now());
+            && $endDateTime->isAfter(now());
     }
 
     public function canDetermineBet(User $user, Bet $bet): bool
