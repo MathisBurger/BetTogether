@@ -43,7 +43,7 @@ readonly class CommunityViewController
     public function viewCommunity(string $id): View
     {
         if (request()->get('tab') === null) {
-            request()->merge(['tab' => 'Dashboard']);
+            request()->merge(['tab' => 'dashboard']);
         }
 
         $community = Community::where('id', $id)->first();

@@ -36,7 +36,7 @@ class Community extends Model
 
     public function betCreators(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'community_bet_creators');
+        return $this->belongsToMany(User::class, 'community_bet_creators', 'community_id', 'creator_id');
     }
 
     public function bets(): HasMany

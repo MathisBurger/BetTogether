@@ -1,4 +1,4 @@
-@php use App\Models\BetDeterminationStrategy;use App\Models\ResultType; @endphp
+@php use App\Models\BetDeterminationStrategy; @endphp
 @php use App\Utility\BacklinkUtility; @endphp
 <x-app-layout>
     <x-slot name="header">
@@ -41,16 +41,7 @@
 
                     @endforeach
                 @else
-                    @if ($bet->answer->type === ResultType::Integer->value)
-                        <x-label value="{{ __('messages.answerNumber') }}"/>
-                        <x-input type="number" name="value"/>
-                    @elseif($bet->answer->type === ResultType::Float->value)
-                        <x-label value="{{ __('messages.answerNumber') }}"/>
-                        <x-input type="number" name="value" step="0.01"/>
-                    @elseif($bet->answer->type === ResultType::String->value)
-                        <x-label value="{{ __('messages.answerString') }}"/>
-                        <x-input type="text" name="value"/>
-                    @endif
+                    <x-answer-type-input :type="$bet->answer->type" />
                 @endif
                 <div class="flex items-center justify-end mt-4">
                     <x-button class="ms-4">

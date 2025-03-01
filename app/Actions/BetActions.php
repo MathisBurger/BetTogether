@@ -77,9 +77,7 @@ class BetActions
         $bet = Bet::with('answer')->where('id', $id)->firstOrFail();
         Gate::authorize('canPlaceBet', $bet);
         Validator::make($data, [
-            'stringValue' => ['string'],
-            'integerValue' => ['integer'],
-            'floatValue' => ['numeric'],
+            'value' => ['required']
         ])->validate();
 
         $placedBet = PlacedBet::create([
@@ -91,9 +89,9 @@ class BetActions
         BetAnswer::create([
             'placed_bet_id' => $placedBet->id,
             'type' => $betAnswer->type,
-            'stringValue' => $data['stringValue'] ?? null,
-            'integerValue' => $data['integerValue'] ?? null,
-            'floatValue' => $data['floatValue'] ?? null,
+            'stringValue' => $betAnswer->type === ResultType::String->value ? $data['value'] : null,
+            'integerValue' => $betAnswer->type === ResultType::Integer->value ? $data['value'] : null,
+            'floatValue' => $betAnswer->type === ResultType::Float->value ? $data['value'] : null,
         ]);
 
         return $placedBet;

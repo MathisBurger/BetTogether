@@ -1,4 +1,3 @@
-@php use App\Models\ResultType; @endphp
 @php use App\Utility\BacklinkUtility; @endphp
 <x-app-layout>
     <x-slot name="header">
@@ -13,16 +12,7 @@
             <form method="POST" action="{{ route('place-bet-action', $bet->id) }}">
                 @csrf
                 <p>{{$bet->betText}}</p>
-                @if ($bet->answer->type === ResultType::Integer->value)
-                    <x-label value="{{ __('messages.answerNumber') }}" />
-                    <x-input type="number" name="integerValue" />
-                @elseif($bet->answer->type === ResultType::Float->value)
-                    <x-label value="{{ __('messages.answerNumber') }}" />
-                    <x-input type="number" name="floatValue" step="0.01" />
-                @elseif($bet->answer->type === ResultType::String->value)
-                    <x-label value="{{ __('messages.answerString') }}" />
-                    <x-input type="text" name="stringValue" />
-                @endif
+                <x-answer-type-input :type="$bet->answer->type" />
                 <div class="flex items-center justify-end mt-4">
                     <x-button class="ms-4">
                         {{ __('messages.placeBet') }}
