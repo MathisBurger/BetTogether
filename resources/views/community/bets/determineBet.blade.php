@@ -37,9 +37,6 @@
                         @endforeach
                         </tbody>
                     </table>
-                    @foreach($placedBets as $placedBet)
-
-                    @endforeach
                 @else
                     <x-answer-type-input :type="$bet->answer->type" />
                 @endif
