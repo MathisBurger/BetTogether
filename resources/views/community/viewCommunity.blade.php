@@ -21,10 +21,21 @@
             @endif
                 <div class="row mt-3 mb-3">
                     @foreach($leaderboards as $leaderboard)
-                        <div class="col col-md-6">
+                        <div class="col col-md-6 mt-2">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5>{{$leaderboard['name']}}</h5>
+                                    <div class="row">
+                                        <div class="col col-md-11">
+                                            <h5>{{$leaderboard['name']}}</h5>
+                                        </div>
+                                        <div class="col col-md-1">
+                                            @if(Gate::allows('canDeleteLeaderboard', $community))
+                                                <a href="{{route('delete-leaderboard-action',  $leaderboard['id'])}}">
+                                                    <i class="fas fa-trash-alt text-red-500"></i>
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
                                     <hr />
                                     <table class="table">
                                         <thead>

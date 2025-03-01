@@ -43,6 +43,11 @@ class CommunityPolicy implements PolicyInterface
         return $this->update($authUser, $community);
     }
 
+    public function canDeleteLeaderboard(User $authUser, Community $community): bool
+    {
+        return $this->update($authUser, $community);
+    }
+
     public function join(User $authUser, Community $community): bool
     {
         if ($community->members()->where('member_id', $authUser->id)->exists()) {

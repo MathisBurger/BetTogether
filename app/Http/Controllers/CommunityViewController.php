@@ -67,6 +67,7 @@ class CommunityViewController
             $standings = Standing::with('user')->where('leaderboard_id', $leaderboardObject->id)->orderBy('rank')->paginate(50, pageName: $leaderboardObject->id);
             $standings->appends(request()->except($leaderboardObject->id));
             return [
+                'id' => $leaderboardObject->id,
                 'name' => $leaderboardObject->name,
                 'standings' => $standings
             ];

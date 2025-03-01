@@ -44,13 +44,14 @@ class LeaderboardActions
             'isAllTime' => $isAllTime,
         ]);
 
-        $this->rankingService->createRanking(
-            $community,
-            $leaderboard,
-            $data['periodStart'] ? Carbon::parse($data['periodStart']) : null,
-            $data['periodEnd'] ? Carbon::parse($data['periodEnd']) : null,
-        );
+        $this->rankingService->createRanking($leaderboard);
 
         return $leaderboard;
+    }
+
+    public function delete(Leaderboard $leaderboard): void
+    {
+        Gate::authorize('canDeleteLeaderboard', $leaderboard->community);
+        $leaderboard->delete();
     }
 }

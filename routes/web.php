@@ -43,4 +43,5 @@ Route::middleware([
     // Leaderboard
     Route::post('/communities/{community}/leaderboards', [LeaderboardActionController::class, 'createLeaderboard'])->name('create-leaderboard-action');
     Route::get('/communities/{community}/createLeaderboard', [LeaderboardViewController::class, 'createLeaderboardView'])->name('create-leaderboard-view');
+    Route::get('/leaderboards/{leaderboard}/delete', [LeaderboardActionController::class, 'deleteLeaderboard'])->name('delete-leaderboard-action');
 });
