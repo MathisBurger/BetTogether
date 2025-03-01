@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Bet details') }}
+            {{ __('messages.betDetails') }}
         </h2>
     </x-slot>
     <x-main-content-card>
@@ -15,16 +15,16 @@
         </span>
         <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium text-teal-800" style="color: {{$bet->isDeterminated ? '#115e59' : ''}}; background: #dbeafe">
             @if($bet->isDeterminated)
-                Determinated
+               {{__('messages.determinated')}}
             @else
-                Open
+                {{__('messages.open')}}
             @endif
         </span>
-        <span style="background: #fef9c3; color: #854d0e" class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium">{{$bet->totalPoints}} points</span>
+        <span style="background: #fef9c3; color: #854d0e" class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium">{{$bet->totalPoints}} {{__('messages.points')}}</span>
         <br />
         @if ($bet->isDeterminated)
             <br />
-            <b>Answer:</b>
+            <b>{{__('messages.answer')}}:</b>
             <x-answer-display :answer="$bet->answer" />
             <hr />
             <br />
@@ -32,24 +32,24 @@
         @if($canPlaceBet)
             <div class="mt-1">
                 <x-link href="{{route('view-place-bet', $bet->id)}}">
-                    Place bet
+                    {{__('messages.placeBet')}}
                 </x-link>
             </div>
         @endif
         @if($canDetermineBet)
             <div class="mt-1">
                 <x-link href="{{route('view-determine-bet', $bet->id)}}">
-                    Determine bet
+                    {{__('messages.determineBet')}}
                 </x-link>
             </div>
         @endif
         <table class="table">
             <thead>
                 <tr>
-                    <th>Person</th>
-                    <th>Bet</th>
-                    <th>Placement</th>
-                    <th>Points</th>
+                    <th>{{__('messages.person')}}</th>
+                    <th>{{__('messages.bet')}}</th>
+                    <th>{{__('messages.placement')}}</th>
+                    <th>{{__('messages.points')}}</th>
                 </tr>
             </thead>
             <tbody>

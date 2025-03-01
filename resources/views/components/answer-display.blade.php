@@ -1,10 +1,11 @@
+@php use App\Models\ResultType; @endphp
 @props(['answer' => new \App\Models\BetAnswer()])
 
 
-@if($answer->type === \App\Models\ResultType::Integer->value)
+@if($answer->type === ResultType::Integer->value)
     <p>{{$answer->integerValue}}</p>
-@elseif($answer->type === \App\Models\ResultType::Float->value)
+@elseif($answer->type === ResultType::Float->value)
     <p>{{$answer->floatValue}}</p>
-@elseif($answer->type === \App\Models\ResultType::String->value)
+@elseif($answer->type === ResultType::String->value)
     <p>{{$answer->stringValue}}</p>
 @endif

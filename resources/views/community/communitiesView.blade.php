@@ -1,10 +1,9 @@
-@php use App\Models\CommunityJoinPolicy; @endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Your communities') }}
+            {{ __('messages.yourCommunities') }}
         </h2>
-        <x-link href="{{route('create-community')}}">Create Community</x-link>
+        <x-link href="{{route('create-community')}}">{{__('messages.createCommunity')}}</x-link>
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -12,9 +11,9 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Admin</th>
-                        <th>Actions</th>
+                        <th>{{__('messages.name')}}</th>
+                        <th>{{__('messages.admin')}}</th>
+                        <th>{{__('messages.actions')}}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -23,7 +22,7 @@
                             <td>{{ $community->name }}</td>
                             <td>{{ $community->admin->name }}</td>
                             <td>
-                                <x-link href="{{route('show-community', $community->id)}}">Open</x-link>
+                                <x-link href="{{route('show-community', $community->id)}}">{{__('messages.open')}}</x-link>
                             </td>
                         </tr>
                     @endforeach
@@ -31,7 +30,7 @@
                 </table>
 
                 @if(count($communities) === 0)
-                    <x-alert message="You are not a member of an community" />
+                    <x-alert message="{{__('messages.notAMemberOfCommunity')}}" />
                 @endif
 
                 {{ $communities->links() }}

@@ -3,7 +3,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Place bet') }}
+            {{ __('messages.placeBet') }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -14,18 +14,18 @@
                 @csrf
                 <p>{{$bet->betText}}</p>
                 @if ($bet->answer->type === ResultType::Integer->value)
-                    <x-label value="{{ __('Answer (Number)') }}" />
+                    <x-label value="{{ __('messages.answerNumber') }}" />
                     <x-input type="number" name="integerValue" />
                 @elseif($bet->answer->type === ResultType::Float->value)
-                    <x-label value="{{ __('Answer (Number)') }}" />
+                    <x-label value="{{ __('messages.answerNumber') }}" />
                     <x-input type="number" name="floatValue" step="0.01" />
                 @elseif($bet->answer->type === ResultType::String->value)
-                    <x-label value="{{ __('Answer (String)') }}" />
+                    <x-label value="{{ __('messages.answerString') }}" />
                     <x-input type="text" name="stringValue" />
                 @endif
                 <div class="flex items-center justify-end mt-4">
                     <x-button class="ms-4">
-                        {{ __('Place bet') }}
+                        {{ __('messages.placeBet') }}
                     </x-button>
                 </div>
             </form>

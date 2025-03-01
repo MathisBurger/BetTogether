@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create leaderboard') }}
+            {{ __('messages.createLeaderboard') }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -12,27 +12,27 @@
             <form method="POST" action="{{ route('create-leaderboard-action', $community->id) }}">
                 @csrf
                 <div>
-                    <x-label value="{{ __('Name') }}" />
+                    <x-label value="{{ __('messages.name') }}" />
                     <x-input class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
                 </div>
                 <div class="mt-1">
-                    <x-label value="{{ __('Is all time') }}" />
+                    <x-label value="{{ __('messages.isAllTime') }}" />
                     <x-checkbox name="isAllTime" id="isAllTime" />
                 </div>
 
                 <div id="periodStart" class="mt-1">
-                    <x-label value="{{ __('Period start') }}" />
+                    <x-label value="{{ __('messages.periodStart') }}" />
                     <x-datepicker name="periodStart" />
                 </div>
 
                 <div id="periodEnd" class="mt-1">
-                    <x-label value="{{ __('Period end') }}" />
+                    <x-label value="{{ __('messages.periodEnd') }}" />
                     <x-datepicker name="periodEnd" />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
                     <x-button class="ms-4">
-                        {{ __('Create') }}
+                        {{ __('messages.create') }}
                     </x-button>
                 </div>
             </form>

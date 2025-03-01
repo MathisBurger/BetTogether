@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Update community:') }} {{$community->name}}
+            {{ __('messages.updateCommunity') }}: {{$community->name}}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -13,27 +13,27 @@
                 @csrf
 
                 <div class="mt-4">
-                    <x-label value="{{ __('Join policy') }}"/>
+                    <x-label value="{{ __('messages.joinPolicy') }}"/>
                     <x-select name="joinPolicy" value="{{$community->joinPolicy}}">
-                        <option value="open " @selected($community->joinPolicy === 'open')>Open</option>
-                        <option value="closed" @selected($community->joinPolicy === 'closed')>Closed</option>
+                        <option value="open " @selected($community->joinPolicy === 'open')>{{__('messages.open')}}</option>
+                        <option value="closed" @selected($community->joinPolicy === 'closed')>{{__('messages.closed')}}</option>
                     </x-select>
                 </div>
 
                 <div class="mt-4">
-                    <x-label value="{{ __('Bet creation policy') }}"/>
+                    <x-label value="{{ __('messages.betCreationPolicy') }}"/>
                     <x-select name="betCreationPolicy" value="{{$community->betCreationPolicy}}">
-                        <option value="admin" @selected($community->betCreationPolicy === 'admin')>Admin only</option>
-                        <option value="creators" @selected($community->betCreationPolicy === 'creators')>Creators only
+                        <option value="admin" @selected($community->betCreationPolicy === 'admin')>{{__('messages.creationPolicyAdminOnly')}}</option>
+                        <option value="creators" @selected($community->betCreationPolicy === 'creators')>{{__('messages.creationPolicyCreatorsOnly')}}
                         </option>
-                        <option value="everyone" @selected($community->betCreationPolicy === 'everyone')>Everyone
+                        <option value="everyone" @selected($community->betCreationPolicy === 'everyone')>{{__('messages.creationPolicyEveryone')}}
                         </option>
                     </x-select>
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
                     <x-button class="ms-4">
-                        {{ __('Update') }}
+                        {{ __('messages.update') }}
                     </x-button>
                 </div>
             </form>

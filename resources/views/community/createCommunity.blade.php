@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create community') }}
+            {{ __('messages.createCommunity') }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -11,30 +11,30 @@
               @csrf
 
               <div>
-                  <x-label for="name" value="{{ __('Name') }}" />
+                  <x-label for="name" value="{{ __('messages.name') }}" />
                   <x-input id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
               </div>
 
               <div class="mt-4">
-                  <x-label value="{{ __('Join policy') }}" />
+                  <x-label value="{{ __('messages.joinPolicy') }}" />
                   <x-select name="joinPolicy">
-                      <option value="open">Open</option>
-                      <option value="closed">Closed</option>
+                      <option value="open">{{__('messages.open')}}</option>
+                      <option value="closed">{{__('messages.closed')}}</option>
                   </x-select>
               </div>
 
               <div class="mt-4">
-                  <x-label value="{{ __('Bet creation policy') }}" />
+                  <x-label value="{{ __('messages.betCreationPolicy') }}" />
                   <x-select name="betCreationPolicy">
-                      <option value="admin">Admin only</option>
-                      <option value="creators">Creators only</option>
-                      <option value="everyone">Everyone</option>
+                      <option value="admin">{{__('messages.creationPolicyAdminOnly')}}</option>
+                      <option value="creators">{{__('messages.creationPolicyCreatorsOnly')}}</option>
+                      <option value="everyone">{{__('messages.creationPolicyEveryone')}}</option>
                   </x-select>
               </div>
 
               <div class="flex items-center justify-end mt-4">
                   <x-button class="ms-4">
-                      {{ __('Create') }}
+                      {{ __('messages.create') }}
                   </x-button>
               </div>
           </form>

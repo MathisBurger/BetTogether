@@ -16,25 +16,25 @@
             @csrf
 
             <div>
-                <x-label for="email" value="{{ __('Name') }}" />
+                <x-label for="email" value="{{ __('messages.name') }}" />
                 <x-input id="email" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="username" />
             </div>
 
             <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
+                <x-label for="password" value="{{ __('messages.password') }}" />
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
 
             <div class="block mt-4">
                 <label for="remember_me" class="flex items-center">
                     <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                    <span class="ms-2 text-sm text-gray-600">{{ __('messages.rememberMe') }}</span>
                 </label>
             </div>
 
             <div class="flex items-center justify-end mt-4">
                 <x-button class="ms-4">
-                    {{ __('Log in') }}
+                    {{ __('messages.login') }}
                 </x-button>
             </div>
         </form>

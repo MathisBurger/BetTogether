@@ -13,43 +13,43 @@
                 @csrf
 
                 <div>
-                    <x-label for="betText" value="{{ __('Text') }}" />
+                    <x-label for="betText" value="{{ __('messages.text') }}" />
                     <x-input id="betBext" class="block mt-1 w-full" type="text" name="betText" required autofocus autocomplete="name" />
                 </div>
 
                 <div class="mt-4">
-                    <x-label value="{{ __('Total points') }}" />
+                    <x-label value="{{ __('messages.totalPoints') }}" />
                     <x-input class="block mt-1 w-full" type="number" name="totalPoints" required autofocus autocomplete="totalPoints" />
                 </div>
 
                 <div class="mt-4">
-                    <x-label value="{{ __('Determination strategy') }}" />
+                    <x-label value="{{ __('messages.determinationStrategy') }}" />
                     <x-select name="determinationStrategy">
-                        <option value="diff_gradient">Gradient</option>
-                        <option value="exact_match">Exact match</option>
-                        <option value="manual">Manual</option>
+                        <option value="diff_gradient">{{__('messages.gradient')}}</option>
+                        <option value="exact_match">{{__('messages.exactMatch')}}</option>
+                        <option value="manual">{{__('messages.manual')}}</option>
                     </x-select>
                 </div>
 
                 <div class="mt-4 mb-4">
-                    <x-label value="{{ __('End date time') }}" />
+                    <x-label value="{{ __('messages.endDateTime') }}" />
                     <x-datepicker name="endDateTime" />
                 </div>
 
-                <p class="font-bold">Answer</p>
+                <p class="font-bold">{{__('messages.answer')}}</p>
 
                 <div class="mt-4">
-                    <x-label value="{{ __('Answer type') }}" />
+                    <x-label value="{{ __('messages.answerType') }}" />
                     <x-select name="answerType">
-                        <option value="string">String</option>
-                        <option value="integer">Integer</option>
-                        <option value="float">Float</option>
+                        <option value="string">{{__('messages.string')}}</option>
+                        <option value="integer">{{__('messages.integer')}}</option>
+                        <option value="float">{{__('messages.float')}}</option>
                     </x-select>
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
                     <x-button class="ms-4">
-                        {{ __('Create bet') }}
+                        {{ __('messages.createBet') }}
                     </x-button>
                 </div>
             </form>

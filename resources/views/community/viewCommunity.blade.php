@@ -2,22 +2,22 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Community:') }} {{$community->name}}
+            {{ __('messages.community') }}: {{$community->name}}
         </h2>
         @if (Gate::allows('update', $community))
-            <x-link href="{{route('show-edit-community', $community->id)}}">Edit</x-link>
+            <x-link href="{{route('show-edit-community', $community->id)}}">{{__('messages.edit')}}</x-link>
         @endif
         @if(Gate::allows('createBet', $community))
-            <x-link href="{{route('create-bet', $community->id)}}">Create bet</x-link>
+            <x-link href="{{route('create-bet', $community->id)}}">{{__('messages.createBet')}}</x-link>
         @endif
     </x-slot>
     <x-main-content-card>
 
-        <x-tabs :tabs="['Dashboard', 'Members', 'Active bets', 'Past bets']"/>
+        <x-tabs :tabs="['dashboard', 'members', 'activeBets', 'pastBets']"/>
 
-        @if(request()->get('tab') === 'Dashboard')
+        @if(request()->get('tab') === 'dashboard')
             @if(Gate::allows('canCreateLeaderboard', $community))
-                <x-link href="{{route('create-leaderboard-view', $community->id)}}">Create Leaderboard</x-link>
+                <x-link href="{{route('create-leaderboard-view', $community->id)}}">{{__('messages.createLeaderboard')}}</x-link>
             @endif
                 <div class="row mt-3 mb-3">
                     @foreach($leaderboards as $leaderboard)
@@ -40,11 +40,11 @@
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th>Rank</th>
-                                            <th>Name</th>
-                                            <th>Points</th>
-                                            <th>Point diff</th>
-                                            <th>Rank diff</th>
+                                            <th>{{__('messages.rank')}}</th>
+                                            <th>{{__('messages.name')}}</th>
+                                            <th>{{__('messages.points')}}</th>
+                                            <th>{{__('messages.pointsDiff')}}</th>
+                                            <th>{{__('messages.rankDiff')}}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -66,11 +66,11 @@
                     @endforeach
                 </div>
         @endif
-        @if(request()->get('tab') === 'Members')
+        @if(request()->get('tab') === 'members')
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>{{__('messages.name')}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -85,15 +85,15 @@
             {{ $members->links() }}
         @endif
 
-        @if(request()->get('tab') === 'Active bets')
+        @if(request()->get('tab') === 'activeBets')
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Text</th>
-                    <th>Total points</th>
-                    <th>End date time</th>
-                    <th>Creator</th>
-                    <th>Actions</th>
+                    <th>{{__('messages.text')}}</th>
+                    <th>{{__('messages.totalPoints')}}</th>
+                    <th>{{__('messages.endDateTime')}}</th>
+                    <th>{{__('messages.creator')}}</th>
+                    <th>{{__('messages.actions')}}</th>
 
                 </tr>
                 </thead>
@@ -106,7 +106,7 @@
                         <td>{{$bet->creator->name}}</td>
                         <td>
                             <x-link href="{{route('view-bet', $bet->id)}}">
-                                Open
+                                {{__('messages.open')}}
                             </x-link>
                         </td>
                     </tr>
@@ -115,22 +115,21 @@
             </table>
 
             @if(count($activeBets) === 0)
-                <x-alert message="There are no active bets" />
+                <x-alert message="{{__('messages.noActiveBets')}}" />
             @endif
 
             {{ $activeBets->links() }}
         @endif
 
-        @if(request()->get('tab') === 'Past bets')
+        @if(request()->get('tab') === 'pastBets')
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Text</th>
-                    <th>Total points</th>
-                    <th>End date time</th>
-                    <th>Creator</th>
-                    <th>Actions</th>
-
+                    <th>{{__('messages.text')}}</th>
+                    <th>{{__('messages.totalPoints')}}</th>
+                    <th>{{__('messages.endDateTime')}}</th>
+                    <th>{{__('messages.creator')}}</th>
+                    <th>{{__('messages.actions')}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -142,7 +141,7 @@
                         <td>{{$bet->creator->name}}</td>
                         <td>
                             <x-link href="{{route('view-bet', $bet->id)}}">
-                                Open
+                                {{__('messages.open')}}
                             </x-link>
                         </td>
                     </tr>
@@ -151,7 +150,7 @@
             </table>
 
             @if(count($pastBets) === 0)
-                <x-alert message="There are no past bets" />
+                <x-alert message="{{__('messages.noPastBets')}}" />
             @endif
 
             {{ $pastBets->links() }}

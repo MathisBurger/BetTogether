@@ -1,33 +1,37 @@
-@php use App\Models\ResultType; @endphp
+@php use App\Models\BetDeterminationStrategy;use App\Models\ResultType; @endphp
 @php use App\Utility\BacklinkUtility; @endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Determine bet') }}
+            {{ __('messages.determineBet') }}
         </h2>
     </x-slot>
     <div class="py-12">
         <x-card>
-            <x-backlink href="{{BacklinkUtility::generateBetViewBacklink($bet)}}" />
+            <x-backlink href="{{BacklinkUtility::generateBetViewBacklink($bet)}}"/>
             <x-validation-errors class="mb-4"/>
             <form method="POST" action="{{ route('determine-bet-action', $bet->id) }}">
                 @csrf
                 <p>{{$bet->betText}}</p>
-                @if($bet->determinationStrategy === \App\Models\BetDeterminationStrategy::Manual->value)
+                @if($bet->determinationStrategy === BetDeterminationStrategy::Manual->value)
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th>Answer</th>
-                                <th>Points</th>
-                            </tr>
+                        <tr>
+                            <th>{{__('messages.answer')}}</th>
+                            <th>{{__('messages.points')}}</th>
+                        </tr>
                         </thead>
                         <tbody>
                         @foreach($placedBets as $index => $placedBet)
                             <tr>
-                                <td><x-answer-display :answer="$placedBet->answer" /></td>
                                 <td>
-                                    <input style="display: none" name="{{'bets[' . $index . '][placed_bet_id]'}}" value="{{$placedBet->id}}" />
-                                    <x-input type="number" name="{{'bets[' . $index . '][points]'}}" max="{{$bet->totalPoints}}" />
+                                    <x-answer-display :answer="$placedBet->answer"/>
+                                </td>
+                                <td>
+                                    <input style="display: none" name="{{'bets[' . $index . '][placed_bet_id]'}}"
+                                           value="{{$placedBet->id}}"/>
+                                    <x-input type="number" name="{{'bets[' . $index . '][points]'}}"
+                                             max="{{$bet->totalPoints}}"/>
                                 </td>
                             </tr>
                         @endforeach
@@ -38,19 +42,19 @@
                     @endforeach
                 @else
                     @if ($bet->answer->type === ResultType::Integer->value)
-                        <x-label value="{{ __('Answer (Number)') }}" />
-                        <x-input type="number" name="value" />
+                        <x-label value="{{ __('messages.answerNumber') }}"/>
+                        <x-input type="number" name="value"/>
                     @elseif($bet->answer->type === ResultType::Float->value)
-                        <x-label value="{{ __('Answer (Number)') }}" />
-                        <x-input type="number" name="value" step="0.01" />
+                        <x-label value="{{ __('messages.answerNumber') }}"/>
+                        <x-input type="number" name="value" step="0.01"/>
                     @elseif($bet->answer->type === ResultType::String->value)
-                        <x-label value="{{ __('Answer (String)') }}" />
-                        <x-input type="text" name="value" />
+                        <x-label value="{{ __('messages.answerString') }}"/>
+                        <x-input type="text" name="value"/>
                     @endif
                 @endif
                 <div class="flex items-center justify-end mt-4">
                     <x-button class="ms-4">
-                        {{ __('Determine bet') }}
+                        {{ __('messages.determineBet') }}
                     </x-button>
                 </div>
             </form>
