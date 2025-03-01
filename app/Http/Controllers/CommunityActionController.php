@@ -7,6 +7,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * Controller for community actions
+ */
 readonly class CommunityActionController
 {
     public function __construct(private CommunityActions $actions) {}

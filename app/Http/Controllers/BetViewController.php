@@ -8,7 +8,10 @@ use App\Models\PlacedBet;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class BetViewController
+/**
+ * Controller for bet views
+ */
+readonly class BetViewController
 {
     public function viewBet(string $id): View
     {

@@ -8,8 +8,17 @@ use App\Models\Standing;
 use App\Models\User;
 use Illuminate\Support\Str;
 
+/**
+ * This service handles leaderboard rankings
+ */
 readonly class RankingService
 {
+    /**
+     * Creates a ranking or a leaderboard
+     *
+     * @param Leaderboard $leaderboard The leaderboard that the ranking should be created for
+     * @return void
+     */
     public function createRanking(Leaderboard $leaderboard): void
     {
         $standings = $this->getStandings($leaderboard);
@@ -20,6 +29,12 @@ readonly class RankingService
         Standing::insert($inserts);
     }
 
+    /**
+     * Updates all rankings for a community
+     *
+     * @param Community $community The community that contains the leaderboards
+     * @return void
+     */
     public function updateRankingsForCommunity(Community $community): void
     {
         $leaderboards = Leaderboard::where('community_id', $community->id)
@@ -36,6 +51,12 @@ readonly class RankingService
         }
     }
 
+    /**
+     * Updates the ranking of a leaderboard
+     *
+     * @param Leaderboard $leaderboard The leaderboard that should be re-ranked
+     * @return void
+     */
     public function updateRanking(Leaderboard $leaderboard): void
     {
         $calculatedStandings = $this->getStandings($leaderboard);
@@ -59,6 +80,12 @@ readonly class RankingService
         }
     }
 
+    /**
+     * Gets the current standings of a leaderboard
+     *
+     * @param Leaderboard $leaderboard The leaderboard to get current standings from
+     * @return array The current standings
+     */
     private function getStandings(Leaderboard $leaderboard): array
     {
         $baseQuery = User::selectRaw('users.id, SUM(placed_bets.points) as total_points')

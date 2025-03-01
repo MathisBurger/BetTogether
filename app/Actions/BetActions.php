@@ -8,12 +8,14 @@ use App\Models\BetDeterminationStrategy;
 use App\Models\Community;
 use App\Models\PlacedBet;
 use App\Models\ResultType;
+use App\Service\BetService;
 use App\Service\RankingService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Enum;
+use Illuminate\Validation\ValidationException;
 
 /**
  * All actions on a bet used within this platform
@@ -21,9 +23,18 @@ use Illuminate\Validation\Rules\Enum;
 class BetActions
 {
     public function __construct(
-        private readonly RankingService $rankingService
+        private readonly RankingService $rankingService,
+        private readonly BetService $betService,
     ) {}
 
+    /**
+     * Creates a new bet on a community
+     * 
+     * @param string $id The ID of the community to create the bet on
+     * @param array $data The form data that is submitted
+     * @return Bet The created bet
+     * @throws ValidationException Fails on form data validation
+     */
     public function createBet(string $id, array $data): Bet
     {
         $community = Community::where('id', $id)->firstOrFail();
@@ -53,6 +64,14 @@ class BetActions
         return $bet;
     }
 
+    /**
+     * Places a bet on a defined bet.
+     *
+     * @param string $id The ID of the bet to bet on
+     * @param array $data The form data that has been submitted
+     * @return PlacedBet The placed bet
+     * @throws ValidationException Fails on invalid form data
+     */
     public function placeBet(string $id, array $data): PlacedBet
     {
         $bet = Bet::with('answer')->where('id', $id)->firstOrFail();
@@ -80,6 +99,14 @@ class BetActions
         return $placedBet;
     }
 
+    /**
+     * Determines a bet.
+     *
+     * @param string $id The ID of the bet to determine
+     * @param array $data The submitted form data
+     * @return Bet The determined bet
+     * @throws ValidationException Validates the form data
+     */
     public function determineBet(string $id, array $data): Bet
     {
         $bet = Bet::with('answer')->where('id', $id)->firstOrFail();
@@ -95,34 +122,10 @@ class BetActions
             ])->validate();
         }
 
+        $this->betService->determineBet($bet, $data);
+
         /** @var BetAnswer $betAnswer */
         $betAnswer = $bet->answer;
-        if ($bet->determinationStrategy === BetDeterminationStrategy::ExactMatch->value) {
-            DB::update('UPDATE placed_bets SET points = ? WHERE id IN (SELECT placed_bets.id FROM placed_bets
-                   JOIN public.bet_answers ba on placed_bets.id = ba.placed_bet_id
-                   WHERE placed_bets.bet_id = ? AND ba."'.$betAnswer->type.'Value" = ?)', [$bet->totalPoints, $bet->id, $data['value']]);
-            DB::update('UPDATE placed_bets SET points = 0 WHERE id NOT IN (SELECT placed_bets.id FROM placed_bets
-                   JOIN public.bet_answers ba on placed_bets.id = ba.placed_bet_id
-                   WHERE placed_bets.bet_id = ? AND ba."'.$betAnswer->type.'Value" = ?) AND placed_bets.bet_id = ?', [$bet->id, $data['value'], $bet->id]);
-        } elseif ($bet->determinationStrategy === BetDeterminationStrategy::DiffGradient->value) {
-            if ($betAnswer->type === ResultType::String->value) {
-                $maxDiff = DB::select('SELECT MAX(levenshtein(?,  ans1."stringValue")) AS max_diff FROM placed_bets AS pb_1 JOIN bet_answers ans1 ON pb_1.id = ans1.placed_bet_id JOIN bets ON pb_1.bet_id = bets.id WHERE bets.id = ?', [$data['value'], $bet->id])[0]->max_diff;
-                DB::update('UPDATE placed_bets SET points = (
-    ? - ? * (CAST(levenshtein((SELECT "'.$betAnswer->type.'Value" FROM bet_answers WHERE placed_bet_id = placed_bets.id), ?) AS FLOAT) / CAST(? AS FLOAT))
-    )
-WHERE placed_bets.bet_id = ?', [$bet->totalPoints, $bet->totalPoints, $data['value'], $maxDiff, $bet->id]);
-            } else {
-                $maxDiff = DB::select('SELECT MAX(ABS(? - ans1."'.$betAnswer->type.'Value")) AS max_diff FROM placed_bets AS pb_1 JOIN bet_answers ans1 ON pb_1.id = ans1.placed_bet_id JOIN bets ON pb_1.bet_id = bets.id WHERE bets.id = ?', [$data['value'], $bet->id])[0]->max_diff;
-                DB::update('UPDATE placed_bets SET points = (
-    ? - ? * (CAST(ABS((SELECT "'.$betAnswer->type.'Value" FROM bet_answers WHERE placed_bet_id = placed_bets.id) - ?) AS FLOAT) / CAST(? AS FLOAT))
-    )
-WHERE placed_bets.bet_id = ?', [$bet->totalPoints, $bet->totalPoints, $data['value'], $maxDiff, $bet->id]);
-            }
-        } else {
-            foreach ($data['bets'] as $singleBetData) {
-                DB::update('UPDATE placed_bets SET points = ? WHERE id = ?', [$singleBetData['points'], $singleBetData['placed_bet_id']]);
-            }
-        }
 
         /** @var Community $community */
         $community = $bet->community;

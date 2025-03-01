@@ -6,10 +6,14 @@ use App\Actions\BetActions;
 use App\Models\Bet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
+/**
+ * Controller for bet actions
+ */
 readonly class BetActionController
 {
-    public function __construct(private readonly BetActions $actions) {}
+    public function __construct(private BetActions $actions) {}
 
     public function create(string $id, Request $request): RedirectResponse
     {

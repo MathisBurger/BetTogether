@@ -4,6 +4,9 @@ namespace App\Actions\Fortify;
 
 use Illuminate\Validation\Rules\Password;
 
+/**
+ * Rules to validate passwords
+ */
 trait PasswordValidationRules
 {
     /**

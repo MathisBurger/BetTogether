@@ -9,6 +9,9 @@ use App\Policies\CommunityPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Provider for model policies
+ */
 class AuthPoliciesProvider extends ServiceProvider
 {
     public function boot(): void

@@ -12,6 +12,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 
+/**
+ * The fortify service provider
+ */
 class FortifyServiceProvider extends ServiceProvider
 {
     /**

@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 use Parsedown;
 
+/**
+ * Controller for legal views
+ */
 readonly class LegalController
 {
     public function impress(): View

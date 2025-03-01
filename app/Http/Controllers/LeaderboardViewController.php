@@ -6,6 +6,9 @@ use App\Models\Community;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
+/**
+ * Controller for leaderboard views
+ */
 readonly class LeaderboardViewController
 {
     public function createLeaderboardView(string $id): View

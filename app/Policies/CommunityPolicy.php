@@ -37,6 +37,23 @@ class CommunityPolicy implements PolicyInterface
         return $admin->id === $authUser->id;
     }
 
+    public function create(User $authUser, $object): bool
+    {
+        throw new NotImplementedException;
+    }
+
+    public function delete(User $authUser, $object): bool
+    {
+        throw new NotImplementedException;
+    }
+
+    /**
+     * Checks if a user can create a bet on a community
+     *
+     * @param User $authUser The user that wants to perform the action
+     * @param Community $community The community that the bet should be created on
+     * @return bool
+     */
     public function createBet(User $authUser, Community $community): bool
     {
         /** @var User $admin */
@@ -54,16 +71,37 @@ class CommunityPolicy implements PolicyInterface
         };
     }
 
+    /**
+     * Checks if a user can create a leaderboard on a community
+     *
+     * @param User $authUser The user that wants to perform the action
+     * @param Community $community The community that the leaderboard should be created on
+     * @return bool
+     */
     public function canCreateLeaderboard(User $authUser, Community $community): bool
     {
         return $this->update($authUser, $community);
     }
 
+    /**
+     * Checks if a user can delete a leaderboard
+     *
+     * @param User $authUser The user that wants to perform the action
+     * @param Community $community The community that the leaderboard should be deleted from
+     * @return bool
+     */
     public function canDeleteLeaderboard(User $authUser, Community $community): bool
     {
         return $this->update($authUser, $community);
     }
 
+    /**
+     * Checks if a user can join a community
+     *
+     * @param User $authUser The user that wants to join
+     * @param Community $community The community that the user wants to join
+     * @return bool
+     */
     public function join(User $authUser, Community $community): bool
     {
         if ($community->members()->where('member_id', $authUser->id)->exists()) {
@@ -71,16 +109,6 @@ class CommunityPolicy implements PolicyInterface
         }
 
         return $community->joinPolicy === CommunityJoinPolicy::Open->value;
-    }
-
-    public function create(User $authUser, $object): bool
-    {
-        throw new NotImplementedException;
-    }
-
-    public function delete(User $authUser, $object): bool
-    {
-        throw new NotImplementedException;
     }
 
     public static function registerOther(): void {}

@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class CommunityViewController
+/**
+ * Controller for community views
+ */
+readonly class CommunityViewController
 {
     public function exploreCommunitiesView(): View
     {

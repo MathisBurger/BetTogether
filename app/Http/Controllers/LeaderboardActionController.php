@@ -7,6 +7,9 @@ use App\Models\Leaderboard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
+/**
+ * Controller for leaderboard actions
+ */
 readonly class LeaderboardActionController
 {
     public function __construct(private LeaderboardActions $actions) {}

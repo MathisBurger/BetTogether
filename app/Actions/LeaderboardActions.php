@@ -7,6 +7,7 @@ use App\Models\Leaderboard;
 use App\Service\RankingService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 /**
  * All actions for leaderboards
@@ -17,6 +18,14 @@ class LeaderboardActions
         private readonly RankingService $rankingService,
     ) {}
 
+    /**
+     * Creates a leaderboard on a community
+     *
+     * @param string $id The ID of the community to create on
+     * @param array $data The submitted form data
+     * @return Leaderboard The created leaderboard
+     * @throws ValidationException
+     */
     public function create(string $id, array $data): Leaderboard
     {
         $community = Community::find($id);
@@ -42,6 +51,12 @@ class LeaderboardActions
         return $leaderboard;
     }
 
+    /**
+     * Deletes a leaderboard
+     *
+     * @param Leaderboard $leaderboard The leaderboard to delete
+     * @return void
+     */
     public function delete(Leaderboard $leaderboard): void
     {
         Gate::authorize('canDeleteLeaderboard', $leaderboard->community);

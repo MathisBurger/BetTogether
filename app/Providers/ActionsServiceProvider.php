@@ -8,6 +8,9 @@ use App\Actions\LeaderboardActions;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Provider for all action service classes
+ */
 class ActionsServiceProvider extends ServiceProvider
 {
     public function register(): void
