@@ -13,7 +13,7 @@ class CommunityPolicy implements PolicyInterface
 {
     public function read(User $authUser, $object): bool
     {
-        if (!$object instanceof Community) {
+        if (! $object instanceof Community) {
             return false;
         }
 
@@ -21,6 +21,7 @@ class CommunityPolicy implements PolicyInterface
         $admin = $object->admin;
         /** @var Collection<(int|string), User> $members */
         $members = $object->members;
+
         return ! $members->filter(fn (User $user) => $user->id === $authUser->id)->isEmpty() || $admin->id === $authUser->id;
     }
 

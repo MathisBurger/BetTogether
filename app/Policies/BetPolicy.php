@@ -38,6 +38,7 @@ class BetPolicy implements PolicyInterface
     {
         /** @var Carbon $endDateTime */
         $endDateTime = $bet->endDateTime;
+
         return Gate::allows('read', $bet)
             && ! $bet->placedBets()->where('user_id', auth()->id())->exists()
             && $endDateTime->isAfter(now());
