@@ -1,0 +1,55 @@
+name: Linting
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  pint:
+    name: Run Laravel Pint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Install Laravel Pint
+        run: composer require laravel/pint --dev
+
+      - name: Run Laravel Pint
+        run: ./vendor/bin/pint --test
+
+      - name: Upload Pint report (if failed)
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: pint-report
+          path: ./
+
+      - name: Fail if Pint finds issues
+        if: failure()
+        run: exit 1

@@ -13,16 +13,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Leaderboard extends Model
 {
-    use HasUuids;
     use HasTimestamps;
-
+    use HasUuids;
 
     protected $fillable = [
         'name',
         'periodStart',
         'periodEnd',
         'isAllTime',
-        'community_id'
+        'community_id',
     ];
 
     public function community(): BelongsTo

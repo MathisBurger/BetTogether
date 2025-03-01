@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 
 readonly class BetActionController
 {
-
     public function __construct(private readonly BetActions $actions) {}
 
     public function create(string $id, Request $request): RedirectResponse
     {
         $bet = $this->actions->createBet($id, $request->all());
+
         return redirect(route('view-bet', $bet));
     }
 
@@ -22,6 +22,7 @@ readonly class BetActionController
     {
         $this->actions->placeBet($id, $request->all());
         $bet = Bet::find($id);
+
         return redirect(route('view-bet', $bet));
     }
 
@@ -29,7 +30,7 @@ readonly class BetActionController
     {
         $this->actions->determineBet($id, $request->all());
         $bet = Bet::find($id);
+
         return redirect(route('view-bet', $bet));
     }
-
 }

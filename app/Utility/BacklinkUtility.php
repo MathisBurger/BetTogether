@@ -6,7 +6,6 @@ use App\Models\Bet;
 
 class BacklinkUtility
 {
-
     public static function generateCommunityViewBacklink(string $communityId): string
     {
         return route('show-community', $communityId);
@@ -16,5 +15,4 @@ class BacklinkUtility
     {
         return route('view-bet', $bet->id);
     }
-
 }

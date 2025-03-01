@@ -14,8 +14,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Bet extends Model
 {
-    use HasUuids;
     use HasTimestamps;
+    use HasUuids;
 
     protected $fillable = [
         'betText',
@@ -24,13 +24,13 @@ class Bet extends Model
         'endDateTime',
         'isDeterminated',
         'community_id',
-        'creator_id'
+        'creator_id',
     ];
 
     protected function casts(): array
     {
         return [
-            'endDateTime' => 'datetime'
+            'endDateTime' => 'datetime',
         ];
     }
 
@@ -53,5 +53,4 @@ class Bet extends Model
     {
         return $this->hasMany(PlacedBet::class);
     }
-
 }

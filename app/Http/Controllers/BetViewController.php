@@ -10,7 +10,6 @@ use Illuminate\View\View;
 
 class BetViewController
 {
-
     public function viewBet(string $id): View
     {
         /** @var Bet $bet */
@@ -23,6 +22,7 @@ class BetViewController
             ->paginate(50);
         $canPlaceBet = Gate::allows('canPlaceBet', $bet);
         $canDetermineBet = Gate::allows('canDetermineBet', $bet);
+
         return view('community.bets.viewBet', ['bet' => $bet, 'canPlaceBet' => $canPlaceBet, 'placedBets' => $placedBets, 'canDetermineBet' => $canDetermineBet]);
     }
 
@@ -35,6 +35,7 @@ class BetViewController
     {
         $bet = Bet::with('answer')->find($id);
         Gate::authorize('read', $bet);
+
         return view('community.bets.placeBet', ['bet' => $bet]);
     }
 
@@ -50,5 +51,4 @@ class BetViewController
 
         return view('community.bets.determineBet', ['bet' => $bet, 'placedBets' => $placedBets]);
     }
-
 }

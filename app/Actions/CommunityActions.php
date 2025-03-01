@@ -19,12 +19,12 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
  */
 class CommunityActions
 {
-
     /**
      * Creates a new community
      *
-     * @param array $data The input data
+     * @param  array  $data  The input data
      * @return Community The created community
+     *
      * @throws ValidationException If invalid data has been submitted
      */
     public function create(array $data): Community
@@ -47,16 +47,17 @@ class CommunityActions
     /**
      * Updates a community
      *
-     * @param string $id The ID of the community
-     * @param array $data The data of the community that should be updated
+     * @param  string  $id  The ID of the community
+     * @param  array  $data  The data of the community that should be updated
      * @return Community The updated community
+     *
      * @throws ValidationException
      */
     public function update(string $id, array $data): Community
     {
         $community = Community::where('id', $id)->firstOrFail();
         if ($community->admin_id !== Auth::id()) {
-            throw new AccessDeniedException();
+            throw new AccessDeniedException;
         }
         Validator::make($data, [
             'joinPolicy' => ['required', 'string', new Enum(CommunityJoinPolicy::class)],
@@ -68,14 +69,16 @@ class CommunityActions
         Gate::authorize('update', $community);
 
         $community->save();
+
         return $community;
     }
 
     /**
      * Joins the current user into a community
      *
-     * @param string $id The community ID
+     * @param  string  $id  The community ID
      * @return Community The updated community
+     *
      * @throws \Exception If user is already member
      */
     public function join(string $id): Community
@@ -88,18 +91,17 @@ class CommunityActions
 
         /** @var Leaderboard $leaderboard */
         foreach ($community->leaderboards as $leaderboard) {
-            $rank = $leaderboard->standings()->count()+1;
+            $rank = $leaderboard->standings()->count() + 1;
             Standing::create([
                 'leaderboard_id' => $leaderboard->id,
                 'user_id' => Auth::id(),
                 'rank' => $rank,
                 'points' => 0,
                 'diffPointsToLastBet' => 0,
-                'diffRanksToLastBet' => 0
+                'diffRanksToLastBet' => 0,
             ]);
         }
 
         return $community;
     }
-
 }

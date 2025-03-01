@@ -1,7 +1,7 @@
 <?php
 
 return [
-  'secureArea' => 'This is a secure area of the application. Please confirm your password before continuing.',
+    'secureArea' => 'This is a secure area of the application. Please confirm your password before continuing.',
     'password' => 'Password',
     'confirm' => 'Confirm',
     'name' => 'Name',
@@ -90,7 +90,7 @@ return [
         'secureText' => 'Your data and stakes are protected by the latest security standards.',
         'uxNewDefined' => 'Your Betting Experience, Redefined',
         'whatWeStandFor' => 'BetTogether stands for an interactive, fair, and entertaining betting experience. Use our smart features to get the most out of your predictions.',
-        'startNow' => 'Start now and experience the future of betting – together and smarter than ever before!'
+        'startNow' => 'Start now and experience the future of betting – together and smarter than ever before!',
     ],
     'menu' => [
         'dashboard' => 'Dashboard',
@@ -117,6 +117,6 @@ return [
         'signUp' => 'Sign up',
         'signIn' => 'Sign in',
         'privacyPolicy' => 'Privacy Policy',
-        'imprint' => 'Imprint'
-    ]
+        'imprint' => 'Imprint',
+    ],
 ];

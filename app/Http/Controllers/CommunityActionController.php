@@ -9,9 +9,7 @@ use Illuminate\Validation\ValidationException;
 
 readonly class CommunityActionController
 {
-
     public function __construct(private CommunityActions $actions) {}
-
 
     /**
      * @throws ValidationException On invalid input data
@@ -29,6 +27,7 @@ readonly class CommunityActionController
     public function update(string $id, Request $request): RedirectResponse
     {
         $community = $this->actions->update($id, $request->all());
+
         return redirect(route('show-community', $community));
     }
 
@@ -38,7 +37,7 @@ readonly class CommunityActionController
     public function joinCommunity(string $id): RedirectResponse
     {
         $community = $this->actions->join($id);
+
         return redirect(route('show-community', $community));
     }
-
 }

@@ -10,28 +10,24 @@ use App\Models\User;
 interface PolicyInterface
 {
     /**
-     * @param User $authUser
-     * @param T $object
-     * @return bool
+     * @param  T  $object
      */
     public function read(User $authUser, $object): bool;
+
     /**
-     * @param User $authUser
-     * @param T $object
-     * @return bool
+     * @param  T  $object
      */
     public function create(User $authUser, $object): bool;
+
     /**
-     * @param User $authUser
-     * @param T $object
-     * @return bool
+     * @param  T  $object
      */
     public function update(User $authUser, $object): bool;
+
     /**
-     * @param User $authUser
-     * @param T $object
-     * @return bool
+     * @param  T  $object
      */
     public function delete(User $authUser, $object): bool;
+
     public static function registerOther(): void;
 }

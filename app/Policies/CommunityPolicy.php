@@ -6,25 +6,25 @@ use App\Models\BetCreationPolicy;
 use App\Models\Community;
 use App\Models\CommunityJoinPolicy;
 use App\Models\User;
-use Illuminate\Support\Facades\Gate;
 use Nette\NotImplementedException;
 
 class CommunityPolicy implements PolicyInterface
 {
-
     public function read(User $authUser, $object): bool
     {
-        if (!$object instanceof Community) {
+        if (! $object instanceof Community) {
             return false;
         }
-        return  !$object->members->filter(fn ($user) => $user->id === $authUser->id)->isEmpty() || $object->admin->id === $authUser->id;
+
+        return ! $object->members->filter(fn ($user) => $user->id === $authUser->id)->isEmpty() || $object->admin->id === $authUser->id;
     }
 
     public function update(User $authUser, $object): bool
     {
-        if (!$object instanceof Community) {
+        if (! $object instanceof Community) {
             return false;
         }
+
         return $object->admin->id === $authUser->id;
     }
 
@@ -53,20 +53,19 @@ class CommunityPolicy implements PolicyInterface
         if ($community->members()->where('member_id', $authUser->id)->exists()) {
             return false;
         }
+
         return $community->joinPolicy === CommunityJoinPolicy::Open->value;
     }
 
     public function create(User $authUser, $object): bool
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
     }
 
     public function delete(User $authUser, $object): bool
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
     }
 
-    public static function registerOther(): void
-    {
-    }
+    public static function registerOther(): void {}
 }

@@ -4,7 +4,6 @@ namespace App\Actions;
 
 use App\Models\Bet;
 use App\Models\BetAnswer;
-use App\Models\BetCreationPolicy;
 use App\Models\BetDeterminationStrategy;
 use App\Models\Community;
 use App\Models\PlacedBet;
@@ -19,14 +18,11 @@ use Illuminate\Validation\Rules\Enum;
 /**
  * All actions on a bet used within this platform
  */
-class BetActions {
-
+class BetActions
+{
     public function __construct(
         private readonly RankingService $rankingService
-    )
-    {
-
-    }
+    ) {}
 
     public function createBet(string $id, array $data): Bet
     {
@@ -53,6 +49,7 @@ class BetActions {
             'bet_id' => $bet->id,
             'type' => $data['answerType'],
         ]);
+
         return $bet;
     }
 
@@ -71,12 +68,13 @@ class BetActions {
             'user_id' => Auth::id(),
         ]);
         BetAnswer::create([
-           'placed_bet_id' => $placedBet->id,
-           'type' => $bet->answer->type,
+            'placed_bet_id' => $placedBet->id,
+            'type' => $bet->answer->type,
             'stringValue' => $data['stringValue'] ?? null,
             'integerValue' => $data['integerValue'] ?? null,
             'floatValue' => $data['floatValue'] ?? null,
         ]);
+
         return $placedBet;
     }
 
@@ -87,34 +85,32 @@ class BetActions {
         if ($bet->determinationStrategy === BetDeterminationStrategy::Manual->value) {
             Validator::make($data, [
                 'bets.*.placed_bet_id' => ['string', 'exists:placed_bets,id'],
-                'bets.*.points' => ['integer', 'min:0', 'max:' . $bet->totalPoints],
+                'bets.*.points' => ['integer', 'min:0', 'max:'.$bet->totalPoints],
             ])->validate();
         } else {
             Validator::make($data, [
-                'value' => ['required']
+                'value' => ['required'],
             ])->validate();
         }
 
         if ($bet->determinationStrategy === BetDeterminationStrategy::ExactMatch->value) {
             DB::update('UPDATE placed_bets SET points = ? WHERE id IN (SELECT placed_bets.id FROM placed_bets
                    JOIN public.bet_answers ba on placed_bets.id = ba.placed_bet_id
-                   WHERE placed_bets.bet_id = ? AND ba."' . $bet->answer->type .'Value" = ?)'
-                    , [$bet->totalPoints, $bet->id, $data['value']]);
+                   WHERE placed_bets.bet_id = ? AND ba."'.$bet->answer->type.'Value" = ?)', [$bet->totalPoints, $bet->id, $data['value']]);
             DB::update('UPDATE placed_bets SET points = 0 WHERE id NOT IN (SELECT placed_bets.id FROM placed_bets
                    JOIN public.bet_answers ba on placed_bets.id = ba.placed_bet_id
-                   WHERE placed_bets.bet_id = ? AND ba."' . $bet->answer->type .'Value" = ?) AND placed_bets.bet_id = ?'
-                , [$bet->id, $data['value'], $bet->id]);
+                   WHERE placed_bets.bet_id = ? AND ba."'.$bet->answer->type.'Value" = ?) AND placed_bets.bet_id = ?', [$bet->id, $data['value'], $bet->id]);
         } elseif ($bet->determinationStrategy === BetDeterminationStrategy::DiffGradient->value) {
             if ($bet->answer->type === ResultType::String->value) {
                 $maxDiff = DB::select('SELECT MAX(levenshtein(?,  ans1."stringValue")) AS max_diff FROM placed_bets AS pb_1 JOIN bet_answers ans1 ON pb_1.id = ans1.placed_bet_id JOIN bets ON pb_1.bet_id = bets.id WHERE bets.id = ?', [$data['value'], $bet->id])[0]->max_diff;
                 DB::update('UPDATE placed_bets SET points = (
-    ? - ? * (CAST(levenshtein((SELECT "' . $bet->answer->type . 'Value" FROM bet_answers WHERE placed_bet_id = placed_bets.id), ?) AS FLOAT) / CAST(? AS FLOAT))
+    ? - ? * (CAST(levenshtein((SELECT "'.$bet->answer->type.'Value" FROM bet_answers WHERE placed_bet_id = placed_bets.id), ?) AS FLOAT) / CAST(? AS FLOAT))
     )
 WHERE placed_bets.bet_id = ?', [$bet->totalPoints, $bet->totalPoints, $data['value'], $maxDiff, $bet->id]);
             } else {
-                $maxDiff = DB::select('SELECT MAX(ABS(? - ans1."' . $bet->answer->type . 'Value")) AS max_diff FROM placed_bets AS pb_1 JOIN bet_answers ans1 ON pb_1.id = ans1.placed_bet_id JOIN bets ON pb_1.bet_id = bets.id WHERE bets.id = ?', [$data['value'], $bet->id])[0]->max_diff;
+                $maxDiff = DB::select('SELECT MAX(ABS(? - ans1."'.$bet->answer->type.'Value")) AS max_diff FROM placed_bets AS pb_1 JOIN bet_answers ans1 ON pb_1.id = ans1.placed_bet_id JOIN bets ON pb_1.bet_id = bets.id WHERE bets.id = ?', [$data['value'], $bet->id])[0]->max_diff;
                 DB::update('UPDATE placed_bets SET points = (
-    ? - ? * (CAST(ABS((SELECT "' . $bet->answer->type . 'Value" FROM bet_answers WHERE placed_bet_id = placed_bets.id) - ?) AS FLOAT) / CAST(? AS FLOAT))
+    ? - ? * (CAST(ABS((SELECT "'.$bet->answer->type.'Value" FROM bet_answers WHERE placed_bet_id = placed_bets.id) - ?) AS FLOAT) / CAST(? AS FLOAT))
     )
 WHERE placed_bets.bet_id = ?', [$bet->totalPoints, $bet->totalPoints, $data['value'], $maxDiff, $bet->id]);
             }

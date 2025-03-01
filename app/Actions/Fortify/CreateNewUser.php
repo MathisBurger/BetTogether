@@ -29,7 +29,7 @@ class CreateNewUser implements CreatesNewUsers
         return User::create([
             'name' => $input['name'],
             'password' => Hash::make($input['password']),
-            'roles' => [UserRole::Member]
+            'roles' => [UserRole::Member],
         ]);
     }
 }

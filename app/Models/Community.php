@@ -14,15 +14,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Community extends Model
 {
-
-    use HasUuids;
     use HasTimestamps;
+    use HasUuids;
 
     protected $fillable = [
         'name',
         'joinPolicy',
         'betCreationPolicy',
-        'admin_id'
+        'admin_id',
     ];
 
     public function admin(): BelongsTo
@@ -49,5 +48,4 @@ class Community extends Model
     {
         return $this->hasMany(Leaderboard::class);
     }
-
 }

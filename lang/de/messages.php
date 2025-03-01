@@ -90,7 +90,7 @@ return [
         'secureText' => 'Ihre Daten und Einsätze sind durch modernste Sicherheitsstandards geschützt.',
         'uxNewDefined' => 'Ihr Wett-Erlebnis, neu definiert',
         'whatWeStandFor' => 'BetTogether steht für ein interaktives, faires und unterhaltsames Wetterlebnis. Nutzen Sie unsere smarten Funktionen, um das Beste aus Ihren Tipps herauszuholen.',
-        'startNow' => 'Fangen Sie jetzt an und erleben Sie die Zukunft des Wettens – gemeinsam und smarter als je zuvor!'
+        'startNow' => 'Fangen Sie jetzt an und erleben Sie die Zukunft des Wettens – gemeinsam und smarter als je zuvor!',
     ],
     'menu' => [
         'dashboard' => 'Dashboard',
@@ -107,6 +107,6 @@ return [
         'signUp' => 'Registrieren',
         'signIn' => 'Anmelden',
         'privacyPolicy' => 'Datenschutzerklärung',
-        'imprint' => 'Impressum'
-    ]
+        'imprint' => 'Impressum',
+    ],
 ];

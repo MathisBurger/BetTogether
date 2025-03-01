@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Standing extends Model
 {
-    use HasUuids;
     use HasTimestamps;
+    use HasUuids;
 
     protected $fillable = [
         'rank',

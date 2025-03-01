@@ -10,7 +10,6 @@ use Illuminate\Support\ServiceProvider;
 
 class ActionsServiceProvider extends ServiceProvider
 {
-
     public function register(): void
     {
         $this->app->singleton('communityActions', CommunityActions::class);
@@ -22,5 +21,4 @@ class ActionsServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
     }
-
 }

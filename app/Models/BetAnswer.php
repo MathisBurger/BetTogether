@@ -12,10 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class BetAnswer extends Model
 {
-
-    use HasUuids;
     use HasTimestamps;
-
+    use HasUuids;
 
     protected $fillable = [
         'bet_id',
@@ -23,7 +21,7 @@ class BetAnswer extends Model
         'type',
         'stringValue',
         'integerValue',
-        'floatValue'
+        'floatValue',
     ];
 
     public function bet(): BelongsTo

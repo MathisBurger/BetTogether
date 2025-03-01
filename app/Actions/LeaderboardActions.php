@@ -4,25 +4,18 @@ namespace App\Actions;
 
 use App\Models\Community;
 use App\Models\Leaderboard;
-use App\Models\Standing;
-use App\Models\User;
 use App\Service\RankingService;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 /**
  * All actions for leaderboards
  */
 class LeaderboardActions
 {
-
     public function __construct(
         private readonly RankingService $rankingService,
-    )
-    {}
+    ) {}
 
     public function create(string $id, array $data): Leaderboard
     {
@@ -39,8 +32,8 @@ class LeaderboardActions
         $leaderboard = Leaderboard::create([
             'community_id' => $community->id,
             'name' => $data['name'],
-            'periodStart' => !$isAllTime ? $data['periodStart'] ?? null : null,
-            'periodEnd' => !$isAllTime ? $data['periodEnd'] ?? null : null,
+            'periodStart' => ! $isAllTime ? $data['periodStart'] ?? null : null,
+            'periodEnd' => ! $isAllTime ? $data['periodEnd'] ?? null : null,
             'isAllTime' => $isAllTime,
         ]);
 

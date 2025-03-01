@@ -2,13 +2,10 @@
 
 namespace App\Service;
 
-
 use App\Models\Community;
 use App\Models\Leaderboard;
 use App\Models\Standing;
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 readonly class RankingService
@@ -17,7 +14,7 @@ readonly class RankingService
     {
         $standings = $this->getStandings($leaderboard);
         $inserts = array_map(function ($standing, $rank) use ($leaderboard) {
-            return ['id' => Str::uuid() , 'rank' => $rank+1, 'points' => $standing['total_points'] ?? 0, 'user_id' => $standing['id'], 'leaderboard_id' => $leaderboard->id, 'diffPointsToLastBet' => 0, 'diffRanksToLastBet' => 0];
+            return ['id' => Str::uuid(), 'rank' => $rank + 1, 'points' => $standing['total_points'] ?? 0, 'user_id' => $standing['id'], 'leaderboard_id' => $leaderboard->id, 'diffPointsToLastBet' => 0, 'diffRanksToLastBet' => 0];
         }, $standings, array_keys($standings));
 
         Standing::insert($inserts);
@@ -57,7 +54,7 @@ readonly class RankingService
                 'points' => $points,
                 'user_id' => $userId,
                 'diffPointsToLastBet' => $points - $userChangeMap[$userId]['points'],
-                'diffRanksToLastBet' =>  $userChangeMap[$userId]['rank'] - $leaderboardStandings[$i]->rank,
+                'diffRanksToLastBet' => $userChangeMap[$userId]['rank'] - $leaderboardStandings[$i]->rank,
             ]);
         }
     }
@@ -68,9 +65,10 @@ readonly class RankingService
             ->join('placed_bets', 'placed_bets.user_id', '=', 'users.id')
             ->join('bets', 'placed_bets.bet_id', '=', 'bets.id')
             ->where('bets.community_id', $leaderboard->community_id);
-        if (!$leaderboard->isAllTime) {
+        if (! $leaderboard->isAllTime) {
             $baseQuery = $baseQuery->whereBetween('placed_bets.created_at', [$leaderboard->periodStart, $leaderboard->periodEnd]);
         }
+
         return $baseQuery
             ->groupBy('users.id')
             ->orderByDesc('total_points')
