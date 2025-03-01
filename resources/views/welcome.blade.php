@@ -14,6 +14,10 @@
     <div class="container">
 
         <a class="navbar-brand" href="#">BetTogether</a>
+        <nav class="nav">
+            <a class="nav-link text-white" href="{{route('register')}}">{{__('messages.landingPage.signUp')}}</a>
+            <a class="nav-link text-white" href="{{route('login')}}">{{__('messages.landingPage.signIn')}}</a>
+        </nav>
     </div>
 </nav>
 

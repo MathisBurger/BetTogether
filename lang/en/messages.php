@@ -96,7 +96,7 @@ return [
         'dashboard' => 'Dashboard',
         'communities' => 'Communities',
         'exploreCommunities' => 'Explore communities',
-        'manageAccounts' => 'Manage account',
+        'manageAccount' => 'Manage account',
         'profile' => 'Profile',
         'apiTokens' => 'API tokens',
         'logout' => 'Logout',
@@ -115,6 +115,7 @@ return [
         'joinUs' => 'Join us today!',
         'joinUsText' => 'Create your community, place your bets, and start climbing the leaderboards now!',
         'signUp' => 'Sign up',
+        'signIn' => 'Sign in',
         'privacyPolicy' => 'Privacy Policy',
         'imprint' => 'Imprint'
     ]

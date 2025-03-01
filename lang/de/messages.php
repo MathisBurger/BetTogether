@@ -96,7 +96,7 @@ return [
         'dashboard' => 'Dashboard',
         'communities' => 'Communities',
         'exploreCommunities' => 'Communities entdecken',
-        'manageAccounts' => 'Konto verwalten',
+        'manageAccount' => 'Konto verwalten',
         'profile' => 'Profil',
         'apiTokens' => 'API-Tokens',
         'logout' => 'Abmelden',
@@ -105,6 +105,7 @@ return [
         'title' => 'Communities erstellen, Wetten platzieren und Spaß haben!',
         'joinUs' => 'Treten Sie uns bei!',
         'signUp' => 'Registrieren',
+        'signIn' => 'Anmelden',
         'privacyPolicy' => 'Datenschutzerklärung',
         'imprint' => 'Impressum'
     ]
