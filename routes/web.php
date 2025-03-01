@@ -6,6 +6,7 @@ use App\Http\Controllers\CommunityActionController;
 use App\Http\Controllers\CommunityViewController;
 use App\Http\Controllers\LeaderboardActionController;
 use App\Http\Controllers\LeaderboardViewController;
+use App\Http\Controllers\LegalController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -45,3 +46,6 @@ Route::middleware([
     Route::get('/communities/{community}/createLeaderboard', [LeaderboardViewController::class, 'createLeaderboardView'])->name('create-leaderboard-view');
     Route::get('/leaderboards/{leaderboard}/delete', [LeaderboardActionController::class, 'deleteLeaderboard'])->name('delete-leaderboard-action');
 });
+
+// Legal
+Route::get('/impress', [LegalController::class, 'impress'])->name('impress');

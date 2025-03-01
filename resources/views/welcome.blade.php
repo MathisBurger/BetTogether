@@ -60,10 +60,10 @@
 
 <footer class="bg-dark text-white py-4">
     <div class="container text-center">
-        <p>&copy; 2025 BetTogether. All rights reserved.</p>
+        <p>&copy; 2025 Mathis Burger. All rights reserved.</p>
         <ul class="list-inline">
-            <li class="list-inline-item"><a href="#" class="text-white">Privacy Policy</a></li>
-            <li class="list-inline-item"><a href="#" class="text-white">Terms of Service</a></li>
+            <li class="list-inline-item"><a href="/privacy-policy" class="text-white">Privacy Policy</a></li>
+            <li class="list-inline-item"><a href="{{route('impress')}}" class="text-white">Impress</a></li>
         </ul>
     </div>
 </footer>
