@@ -108,4 +108,10 @@ return [
     'alreadyMemberOfCommunity' => 'Du bist bereits ein Mitglied dieser Community!',
     'invitesNotEnabled' => 'Einladungslinks sind nicht für diese Community aktiviert!',
     'joinCommunityViaLink' => 'Klicke, um der Community über den Einladungslink beizutreten',
+    'betCreated' => 'Eine neue Wette :betName mit :points Punkten ist erstellt worden!',
+    'betDeterminated' => 'Die Wette :betName wurde bestimmt!',
+    'notifications' => 'Benachrichtigungen',
+    'message' => 'Nachricht',
+    'clearAll' => 'Alle als gelesen markieren',
+    'noNotifications' => 'Keine Benachrichtigungen verfügbar',
 ];

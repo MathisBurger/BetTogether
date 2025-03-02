@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardViewController;
 use App\Http\Controllers\LeaderboardActionController;
 use App\Http\Controllers\LeaderboardViewController;
 use App\Http\Controllers\LegalController;
+use App\Http\Controllers\NotificationsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,6 +21,9 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', [DashboardViewController::class, 'dashboardView'])->name('dashboard');
+    Route::get('/notifications', [NotificationsController::class, 'notificationsView'])->name('notifications');
+    Route::get('/notifications/{notification}/markAsRead', [NotificationsController::class, 'markAsRead'])->name('notifications-mark-read');
+    Route::get('/markAllNotificationsAsRead', [NotificationsController::class, 'markAllAsRead'])->name('notifications-all-mark-read');
 
     // Community
     Route::get('/explore-communities', [CommunityViewController::class, 'exploreCommunitiesView'])->name('explore-communities');

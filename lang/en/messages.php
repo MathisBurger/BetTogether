@@ -118,4 +118,10 @@ return [
     'alreadyMemberOfCommunity' => 'You are already a member of this community!',
     'invitesNotEnabled' => 'Invites are not enabled for this community!',
     'joinCommunityViaLink' => 'Click join in order to join the community via the invitation form!',
+    'betCreated' => 'New bet :betName with :points points has been created!',
+    'betDeterminated' => 'The bet :betName has been determinated!',
+    'notifications' => 'Notifications',
+    'message' => 'Message',
+    'clearAll' => 'Clear all',
+    'noNotifications' => 'There are no notifications',
 ];
