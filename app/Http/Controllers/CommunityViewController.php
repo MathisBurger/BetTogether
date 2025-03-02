@@ -98,6 +98,7 @@ readonly class CommunityViewController
     {
         $community = Community::where('id', $id)->first();
         $joinAllowed = Gate::allows('join', $community);
+
         return \view('community.communityInvite', ['community' => $community, 'joinAllowed' => $joinAllowed]);
     }
 }

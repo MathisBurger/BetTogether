@@ -22,7 +22,7 @@ class Community extends Model
         'joinPolicy',
         'betCreationPolicy',
         'admin_id',
-        'inviteLinks'
+        'inviteLinks',
     ];
 
     public function admin(): BelongsTo

@@ -115,5 +115,5 @@ return [
     'joinCommunity' => 'Community beitreten',
     'alreadyMemberOfCommunity' => 'Du bist bereits ein Mitglied dieser Community!',
     'invitesNotEnabled' => 'Einladungslinks sind nicht für diese Community aktiviert!',
-    'joinCommunityViaLink' => 'Klicke, um der Community über den Einladungslink beizutreten'
+    'joinCommunityViaLink' => 'Klicke, um der Community über den Einladungslink beizutreten',
 ];
