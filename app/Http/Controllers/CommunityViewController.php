@@ -67,7 +67,7 @@ readonly class CommunityViewController
 
         $pastBets = Bet::with('creator')->whereHas('community', function ($query) use ($id) {
             $query->where('id', $id);
-        })->where('endDateTime', '<=', Carbon::now())->orWhere('isDeterminated', true)->paginate(50);
+        })->where('isDeterminated', true)->paginate(50);
         $pastBets->appends(request()->except('page'));
 
         /** @var Collection<(int|string), Leaderboard> $leaderboardObjects */
