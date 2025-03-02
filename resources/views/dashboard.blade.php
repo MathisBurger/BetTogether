@@ -20,6 +20,15 @@
                                 <x-alert message="{{__('messages.dashboard.noOpenBets')}}" />
                             @endif
                         </div>
+                        <div class="col col-md-6">
+                            <h1 class="text-2xl font-medium text-gray-900">
+                                {{__('messages.dashboard.leaderboards')}}
+                            </h1>
+                            <x-leaderboard-table :leaderboards="$leaderboards" :showDelete="false" :community="null" colWidth="col-md-12" />
+                            @if(count($leaderboards) === 0)
+                                <x-alert message="{{__('messages.dashboard.noFavoriteLeaderboards')}}" />
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

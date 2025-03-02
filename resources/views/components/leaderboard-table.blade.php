@@ -1,11 +1,11 @@
-@props(['community', 'leaderboards', 'showDelete' => true])
+@props(['community', 'leaderboards', 'showDelete' => true, 'colWidth' => 'col-md-6'])
 
 @if(Gate::allows('canCreateLeaderboard', $community))
     <x-link href="{{route('create-leaderboard-view', $community->id)}}">{{__('messages.createLeaderboard')}}</x-link>
 @endif
 <div class="row mt-3 mb-3">
     @foreach($leaderboards as $leaderboard)
-        <div class="col col-md-6 mt-2">
+        <div class="{{'col ' . $colWidth . ' mt-2'}}">
             <div class="card">
                 <div class="card-body">
                     <div class="row">

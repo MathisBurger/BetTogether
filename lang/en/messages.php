@@ -81,6 +81,8 @@ return [
     'dashboard' => [
         'openBets' => 'Open bets',
         'noOpenBets' => 'There are no open bets',
+        'leaderboards' => 'Leaderboards',
+        'noFavoriteLeaderboards' => 'There are no favorite leaderboards',
     ],
     'menu' => [
         'dashboard' => 'Dashboard',

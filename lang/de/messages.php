@@ -81,6 +81,8 @@ return [
     'dashboard' => [
         'openBets' => 'Offene Wetten',
         'noOpenBets' => 'Es gibt keine offenen Wetten',
+        'leaderboards' => 'Leaderboards',
+        'noFavoriteLeaderboards' => 'Es gibt keine Leaderboards die dir gefallen',
     ],
     'menu' => [
         'dashboard' => 'Dashboard',

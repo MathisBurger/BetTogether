@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bet;
+use App\Service\LeaderboardService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 readonly class DashboardViewController
 {
+
+    public function __construct(private LeaderboardService $leaderboardService)
+    {
+
+    }
 
     public function dashboardView(): View
     {
@@ -29,7 +35,9 @@ readonly class DashboardViewController
             ->where('endDateTime', '>', Carbon::now())
             ->limit(10)->get();
 
-        return \view('dashboard', ['openBets' => $openBets]);
+        $leaderboards = $this->leaderboardService->getUserFavoriteLeaderboards();
+
+        return \view('dashboard', ['openBets' => $openBets, 'leaderboards' => $leaderboards]);
     }
 
 }
