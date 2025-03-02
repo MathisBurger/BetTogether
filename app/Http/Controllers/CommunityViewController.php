@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bet;
 use App\Models\Community;
-use App\Models\User;
+use App\Service\CommunityService;
 use App\Service\LeaderboardService;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
@@ -16,7 +14,7 @@ use Illuminate\View\View;
  */
 readonly class CommunityViewController
 {
-    public function __construct(private LeaderboardService $leaderboardService) {}
+    public function __construct(private LeaderboardService $leaderboardService, private CommunityService $communityService) {}
 
     public function exploreCommunitiesView(): View
     {
@@ -56,20 +54,9 @@ readonly class CommunityViewController
 
         Gate::authorize('read', $community);
 
-        $members = User::join('community_members', 'community_members.member_id', '=', 'users.id')
-            ->where('community_members.community_id', $id)->paginate(50);
-        $members->appends(request()->except('page'));
-
-        $activeBets = Bet::with('creator')->whereHas('community', function ($query) use ($id) {
-            $query->where('id', $id);
-        })->where('endDateTime', '>', Carbon::now())->where('isDeterminated', false)->paginate(50);
-        $activeBets->appends(request()->except('page'));
-
-        $pastBets = Bet::with('creator')->whereHas('community', function ($query) use ($id) {
-            $query->where('id', $id);
-        })->where('isDeterminated', true)->paginate(50);
-        $pastBets->appends(request()->except('page'));
-
+        $members = $this->communityService->getCommunityMembers($id);
+        $activeBets = $this->communityService->getCommunityActiveBets($id);
+        $pastBets = $this->communityService->getCommunityPastBets($id);
         $leaderboards = $this->leaderboardService->getCommunityLeaderboards($id);
 
         return \view('community.viewCommunity', ['community' => $community, 'members' => $members, 'activeBets' => $activeBets, 'pastBets' => $pastBets, 'leaderboards' => $leaderboards->toArray()]);

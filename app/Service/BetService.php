@@ -5,7 +5,12 @@ namespace App\Service;
 use App\Models\Bet;
 use App\Models\BetAnswer;
 use App\Models\BetDeterminationStrategy;
+use App\Models\PlacedBet;
 use App\Models\ResultType;
+use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -13,8 +18,48 @@ use Illuminate\Support\Facades\DB;
  * NOTE: I know this is kinda ugly and hard to read. I kind of had to do it to keep up performance on large datasets.
  * I know, I could have solved this in a more elegant way. But come on: This is a fuckin side project.
  */
-class BetService
+readonly class BetService
 {
+    /**
+     * Gets all placed bets for a bet
+     *
+     * @param  Bet  $bet  The bet
+     * @return LengthAwarePaginator The paginator
+     */
+    public function getPlacedBetsForBet(Bet $bet): LengthAwarePaginator
+    {
+        return PlacedBet::with('answer')
+            ->with('user')
+            ->where('bet_id', $bet->id)
+            ->orderByDesc('points')
+            ->paginate(50);
+    }
+
+    /**
+     * Gets the open bets of the current user
+     *
+     * @return Collection All open bets
+     */
+    public function getCurrentUsersOpenBets(): Collection
+    {
+        return Bet::whereHas('community', function ($query) {
+            $query->whereHas('members', function ($userQuery) {
+                $userQuery->where('id', Auth::id());
+            });
+        })
+            // This logic is not needed. Just comment it back in if the wished behaviour is to not display bets that you have already placed a bet on
+            /*->where(function ($query) {
+                $query->whereHas('placedBets', function ($betsQuery) {
+                    $betsQuery->whereHas('user', function ($userQuery) {
+                        $userQuery->whereNot('id', Auth::id());
+                    });
+                })->orWhereDoesntHave('placedBets');
+            })*/
+            ->where('isDeterminated', false)
+            ->where('endDateTime', '>', Carbon::now())
+            ->limit(10)->get();
+    }
+
     /**
      * Determines an bet using native SQL queries
      *
