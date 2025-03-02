@@ -37,8 +37,38 @@
                                 <td>{{ $standing->rank }}</td>
                                 <td>{{ $standing->user->name }}</td>
                                 <td>{{$standing->points}}</td>
-                                <td>{{$standing->diffPointsToLastBet}}</td>
-                                <td>{{$standing->diffRanksToLastBet}}</td>
+                                <td>
+                                    @if($standing->diffPointsToLastBet < 0)
+                                        <p class="text-red-500">
+                                            <i class="fas fa-arrow-down"></i>
+                                            {{$standing->diffPointsToLastBet}}
+                                        </p>
+
+                                    @elseif($standing->diffPointsToLastBet > 0)
+                                        <p class="text-green-600">
+                                            <i class="fas fa-arrow-up"></i>
+                                            {{$standing->diffPointsToLastBet}}
+                                        </p>
+                                    @else
+                                        <p>{{$standing->diffPointsToLastBet}}</p>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($standing->diffRanksToLastBet < 0)
+                                        <p class="text-red-500">
+                                            <i class="fas fa-arrow-down"></i>
+                                            {{$standing->diffRanksToLastBet}}
+                                        </p>
+
+                                    @elseif($standing->diffRanksToLastBet > 0)
+                                        <p class="text-green-600">
+                                            <i class="fas fa-arrow-up"></i>
+                                            {{$standing->diffRanksToLastBet}}
+                                        </p>
+                                    @else
+                                        <p>{{$standing->diffRanksToLastBet}}</p>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
