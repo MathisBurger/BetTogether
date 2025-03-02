@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Bet;
 use App\Models\Community;
-use App\Models\Leaderboard;
-use App\Models\Standing;
 use App\Models\User;
 use App\Service\LeaderboardService;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
@@ -19,11 +16,7 @@ use Illuminate\View\View;
  */
 readonly class CommunityViewController
 {
-
-    public function __construct(private LeaderboardService $leaderboardService)
-    {
-
-    }
+    public function __construct(private LeaderboardService $leaderboardService) {}
 
     public function exploreCommunitiesView(): View
     {
@@ -76,7 +69,6 @@ readonly class CommunityViewController
             $query->where('id', $id);
         })->where('isDeterminated', true)->paginate(50);
         $pastBets->appends(request()->except('page'));
-
 
         $leaderboards = $this->leaderboardService->getCommunityLeaderboards($id);
 

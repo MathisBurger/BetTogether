@@ -44,6 +44,7 @@ class CommunityActions
         ]);
         $community->members()->attach(Auth::id());
         $community->save();
+
         return $community;
     }
 

@@ -67,8 +67,7 @@ class LeaderboardActions
     /**
      * Changes the favorite status of an leaderboard
      *
-     * @param Leaderboard $leaderboard The leaderboard that should be marked / unmarked as favorite
-     * @return void
+     * @param  Leaderboard  $leaderboard  The leaderboard that should be marked / unmarked as favorite
      */
     public function changeFavorite(Leaderboard $leaderboard): void
     {

@@ -9,17 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 readonly class LeaderboardService
 {
-
     /**
      * Gets all leaderboards for a community
      *
-     * @param string $id The ID of the community
+     * @param  string  $id  The ID of the community
      * @return Collection The leaderboards as table maps
      */
     public function getCommunityLeaderboards(string $id): Collection
     {
         /** @var Collection<(int|string), Leaderboard> $leaderboardObjects */
         $leaderboardObjects = Leaderboard::where('community_id', $id)->get();
+
         return $this->convertToLeaderboardMaps($leaderboardObjects);
     }
 
@@ -34,13 +34,14 @@ readonly class LeaderboardService
         $leaderboardObjects = Leaderboard::whereHas('favoritesBy', function ($query) {
             $query->where('id', Auth::id());
         })->get();
+
         return $this->convertToLeaderboardMaps($leaderboardObjects);
     }
 
     /**
      * Converts each leaderboard to a map that can be used to display the data in a leaderboard table
      *
-     * @param Collection $leaderboardObjects All leaderboard objects
+     * @param  Collection  $leaderboardObjects  All leaderboard objects
      * @return Collection The objects as maps
      */
     private function convertToLeaderboardMaps(Collection $leaderboardObjects): Collection
@@ -57,5 +58,4 @@ readonly class LeaderboardService
             ];
         });
     }
-
 }

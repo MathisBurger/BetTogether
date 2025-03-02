@@ -10,11 +10,7 @@ use Illuminate\View\View;
 
 readonly class DashboardViewController
 {
-
-    public function __construct(private LeaderboardService $leaderboardService)
-    {
-
-    }
+    public function __construct(private LeaderboardService $leaderboardService) {}
 
     public function dashboardView(): View
     {
@@ -39,5 +35,4 @@ readonly class DashboardViewController
 
         return \view('dashboard', ['openBets' => $openBets, 'leaderboards' => $leaderboards]);
     }
-
 }

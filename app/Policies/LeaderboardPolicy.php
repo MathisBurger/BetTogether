@@ -12,28 +12,28 @@ use Nette\NotImplementedException;
  */
 class LeaderboardPolicy implements PolicyInterface
 {
-
     public function read(User $authUser, $object): bool
     {
         if ($object instanceof Leaderboard) {
             return Gate::allows('read', $object->community);
         }
+
         return false;
     }
 
     public function create(User $authUser, $object): bool
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
     }
 
     public function update(User $authUser, $object): bool
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
     }
 
     public function delete(User $authUser, $object): bool
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException;
     }
 
     public static function registerOther(): void
