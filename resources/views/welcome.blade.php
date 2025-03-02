@@ -9,6 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .bg-img {
+            /** credits: https://www.waldenu.edu/online-bachelors-programs/bs-in-business-administration/resource/six-tips-to-help-you-understand-the-stock-market **/
             background: url("/trade.jpeg");
         }
         .bg-blur {
