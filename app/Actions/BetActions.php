@@ -8,10 +8,12 @@ use App\Models\BetDeterminationStrategy;
 use App\Models\Community;
 use App\Models\PlacedBet;
 use App\Models\ResultType;
+use App\Notifications\FrontendNotification;
 use App\Service\BetService;
 use App\Service\RankingService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\ValidationException;
@@ -60,6 +62,11 @@ class BetActions
             'bet_id' => $bet->id,
             'type' => $data['answerType'],
         ]);
+
+        Notification::sendNow($community->members, new FrontendNotification(
+            route('view-bet', $bet),
+            __('messages.betCreated', ['betName' => $bet->betText, 'points' => $bet->totalPoints])
+        ));
 
         return $bet;
     }
@@ -142,6 +149,11 @@ class BetActions
                 'floatValue' => $betAnswer->type === ResultType::Float->value ? $data['value'] : null,
             ]);
         }
+
+        Notification::sendNow($community->members, new FrontendNotification(
+            route('view-bet', $bet),
+            __('messages.betDeterminated', ['betName' => $bet->betText])
+        ));
 
         return $bet;
     }
