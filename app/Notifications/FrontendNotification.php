@@ -3,8 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 /**
@@ -15,6 +13,7 @@ class FrontendNotification extends Notification
     use Queueable;
 
     private string $link;
+
     private string $message;
 
     public function __construct(string $link, string $message)
