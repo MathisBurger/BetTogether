@@ -120,4 +120,10 @@ return [
         'imprint' => 'Imprint',
     ],
     'search' => 'Search',
+    'inviteLinksEnabled' => 'Invite links enabled',
+    'copyInviteLink' => 'Copy invite link',
+    'joinCommunity' => 'Join community',
+    'alreadyMemberOfCommunity' => 'You are already a member of this community!',
+    'invitesNotEnabled' => 'Invites are not enabled for this community!',
+    'joinCommunityViaLink' => 'Click join in order to join the community via the invitation form!',
 ];
