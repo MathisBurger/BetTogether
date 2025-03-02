@@ -7,10 +7,20 @@
     <title>BetTogether</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bg-img {
+            background: url("/trade.jpeg");
+        }
+        .bg-blur {
+            backdrop-filter: blur(15px);
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
 
         <a class="navbar-brand" href="#">BetTogether</a>
@@ -21,7 +31,8 @@
     </div>
 </nav>
 
-<header class="bg-primary text-white py-20">
+<header class="bg-img text-white">
+    <div class="bg-blur py-20" />
     <div class="container text-center">
         <h1 class="text-4xl font-bold">{{__('messages.landingPage.title')}}</h1>
         <p class="mt-4 text-xl">{{__('messages.landingPage.joinCommunities')}}</p>
@@ -55,7 +66,7 @@
     </div>
 </section>
 
-<section class="bg-gradient-to-r from-green-400 to-blue-500 py-20 text-white" id="sign-up">
+<section class="bg-gradient-to-r from-gray-800 to-gray-600 py-20 text-white" id="sign-up">
     <div class="container text-center">
         <h2 class="text-3xl font-semibold">{{__('messages.landingPage.joinUs')}}</h2>
         <p class="mt-4 text-xl">{{__('messages.landingPage.joinUsText')}}</p>
