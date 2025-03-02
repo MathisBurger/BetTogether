@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('bets', function (Blueprint $table) {
-            $table->dropForeign('bets_creator_id_foreign');
-            $table->foreign('creator_id')->references('id')->on('users')->nullOnDelete();
-        });
         Schema::table('communities', function (Blueprint $table) {
-            $table->dropForeign('communities_admin_id_foreign');
-            $table->foreign('admin_id')->references('id')->on('users')->nullOnDelete();
+            $table->boolean('inviteLinks')->default(false);
         });
     }
 
