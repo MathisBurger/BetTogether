@@ -36,12 +36,15 @@ class CommunityActions
             'betCreationPolicy' => ['required', 'string', new Enum(BetCreationPolicy::class)],
         ])->validate();
 
-        return Community::create([
+        $community = Community::create([
             'name' => $data['name'],
             'joinPolicy' => $data['joinPolicy'],
             'betCreationPolicy' => $data['betCreationPolicy'],
             'admin_id' => Auth::id(),
         ]);
+        $community->members()->attach(Auth::id());
+        $community->save();
+        return $community;
     }
 
     /**

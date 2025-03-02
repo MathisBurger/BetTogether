@@ -29,14 +29,14 @@
         @endif
         @if(request()->get('tab') === 'activeBets')
             <x-bet-table :bets="$activeBets" />
-
+            {{$activeBets->links()}}
             @if(count($activeBets) === 0)
                 <x-alert message="{{__('messages.noActiveBets')}}" />
             @endif
         @endif
         @if(request()->get('tab') === 'pastBets')
             <x-bet-table :bets="$pastBets" />
-
+            {{$pastBets->links()}}
             @if(count($pastBets) === 0)
                 <x-alert message="{{__('messages.noPastBets')}}" />
             @endif
