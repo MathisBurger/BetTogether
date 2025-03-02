@@ -20,13 +20,19 @@ readonly class CommunityViewController
 {
     public function exploreCommunitiesView(): View
     {
-        $communities = Community::where('admin_id', '!=', Auth::id())
+        $query = Community::where('admin_id', '!=', Auth::id())
             ->whereDoesntHave('members', function ($query) {
                 $query->where('member_id', Auth::id());
-            })
-            ->paginate(50);
+            });
+        if (request()->has('search')) {
+            $query->where(function ($query) {
+                $query->where('name', 'like', '%' . request('search') . '%');
+            });
+        }
 
-        return view('community.exploreCommunities', ['communities' => $communities]);
+        $communities = $query->paginate(50);
+
+        return view('community.exploreCommunities', ['communities' => $communities, 'search' => request('search')]);
     }
 
     public function communitiesView(): View

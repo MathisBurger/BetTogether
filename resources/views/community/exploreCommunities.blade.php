@@ -9,6 +9,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4">
+                <form class="mt-3 row-auto">
+                    <x-input placeholder="{{__('messages.search')}}" name="search" value="{{$search}}" />
+                    <x-button type="submit"><i class="fas fa-search p-2"></i></x-button>
+                </form>
                 <table class="table">
                     <thead>
                     <tr>
