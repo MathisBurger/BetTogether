@@ -1,19 +1,28 @@
-@props(['community', 'leaderboards'])
+@props(['community', 'leaderboards', 'showDelete' => true, 'colWidth' => 'col-md-6'])
 
 @if(Gate::allows('canCreateLeaderboard', $community))
     <x-link href="{{route('create-leaderboard-view', $community->id)}}">{{__('messages.createLeaderboard')}}</x-link>
 @endif
 <div class="row mt-3 mb-3">
     @foreach($leaderboards as $leaderboard)
-        <div class="col col-md-6 mt-2">
+        <div class="{{'col ' . $colWidth . ' mt-2'}}">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col col-md-11">
+                        <div class="col col-md-10">
                             <h5>{{$leaderboard['name']}}</h5>
                         </div>
                         <div class="col col-md-1">
-                            @if(Gate::allows('canDeleteLeaderboard', $community))
+                            <a href="{{route('change-leaderboard-favorite-action',  $leaderboard['id'])}}">
+                                @if($leaderboard['isFavorite'])
+                                    <i class="fas fa-star text-yellow-300"></i>
+                                @else
+                                    <i class="fas fa-star text-gray-400"></i>
+                                @endif
+                            </a>
+                        </div>
+                        <div class="col col-md-1">
+                            @if(Gate::allows('canDeleteLeaderboard', $community) && $showDelete)
                                 <a href="{{route('delete-leaderboard-action',  $leaderboard['id'])}}">
                                     <i class="fas fa-trash-alt text-red-500"></i>
                                 </a>

@@ -4,6 +4,7 @@ use App\Http\Controllers\BetActionController;
 use App\Http\Controllers\BetViewController;
 use App\Http\Controllers\CommunityActionController;
 use App\Http\Controllers\CommunityViewController;
+use App\Http\Controllers\DashboardViewController;
 use App\Http\Controllers\LeaderboardActionController;
 use App\Http\Controllers\LeaderboardViewController;
 use App\Http\Controllers\LegalController;
@@ -18,9 +19,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardViewController::class, 'dashboardView'])->name('dashboard');
 
     // Community
     Route::get('/explore-communities', [CommunityViewController::class, 'exploreCommunitiesView'])->name('explore-communities');
@@ -46,6 +45,7 @@ Route::middleware([
     Route::post('/communities/{community}/leaderboards', [LeaderboardActionController::class, 'createLeaderboard'])->name('create-leaderboard-action');
     Route::get('/communities/{community}/createLeaderboard', [LeaderboardViewController::class, 'createLeaderboardView'])->name('create-leaderboard-view');
     Route::get('/leaderboards/{leaderboard}/delete', [LeaderboardActionController::class, 'deleteLeaderboard'])->name('delete-leaderboard-action');
+    Route::get('/leaderboards/{leaderboard}/changeFavorite', [LeaderboardActionController::class, 'changeLeaderboardFavorite'])->name('change-leaderboard-favorite-action');
 });
 
 // Legal

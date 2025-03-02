@@ -23,11 +23,19 @@ readonly class LeaderboardActionController
 
     public function deleteLeaderboard(string $id): RedirectResponse
     {
-        var_dump($id);
         /** @var Leaderboard $leaderboard */
         $leaderboard = Leaderboard::find($id);
         $this->actions->delete($leaderboard);
 
         return redirect(route('show-community', $leaderboard->community));
+    }
+
+    public function changeLeaderboardFavorite(string $id): RedirectResponse
+    {
+        /** @var Leaderboard $leaderboard */
+        $leaderboard = Leaderboard::find($id);
+        $this->actions->changeFavorite($leaderboard);
+
+        return redirect()->back();
     }
 }

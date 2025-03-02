@@ -26,4 +26,3 @@
     @endforeach
     </tbody>
 </table>
-{{ $bets->links() }}

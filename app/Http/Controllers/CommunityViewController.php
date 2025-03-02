@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Bet;
 use App\Models\Community;
-use App\Models\Leaderboard;
-use App\Models\Standing;
 use App\Models\User;
+use App\Service\LeaderboardService;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
@@ -18,6 +16,8 @@ use Illuminate\View\View;
  */
 readonly class CommunityViewController
 {
+    public function __construct(private LeaderboardService $leaderboardService) {}
+
     public function exploreCommunitiesView(): View
     {
         $query = Community::where('admin_id', '!=', Auth::id())
@@ -70,18 +70,7 @@ readonly class CommunityViewController
         })->where('isDeterminated', true)->paginate(50);
         $pastBets->appends(request()->except('page'));
 
-        /** @var Collection<(int|string), Leaderboard> $leaderboardObjects */
-        $leaderboardObjects = Leaderboard::where('community_id', $id)->get();
-        $leaderboards = $leaderboardObjects->map(function (Leaderboard $leaderboardObject) {
-            $standings = Standing::with('user')->where('leaderboard_id', $leaderboardObject->id)->orderBy('rank')->paginate(50, pageName: ''.$leaderboardObject->id);
-            $standings->appends(request()->except($leaderboardObject->id));
-
-            return [
-                'id' => $leaderboardObject->id,
-                'name' => $leaderboardObject->name,
-                'standings' => $standings,
-            ];
-        });
+        $leaderboards = $this->leaderboardService->getCommunityLeaderboards($id);
 
         return \view('community.viewCommunity', ['community' => $community, 'members' => $members, 'activeBets' => $activeBets, 'pastBets' => $pastBets, 'leaderboards' => $leaderboards->toArray()]);
     }
