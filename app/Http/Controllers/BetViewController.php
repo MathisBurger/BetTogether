@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bet;
 use App\Models\BetDeterminationStrategy;
 use App\Models\PlacedBet;
+use App\Service\BetService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
@@ -13,16 +14,14 @@ use Illuminate\View\View;
  */
 readonly class BetViewController
 {
+    public function __construct(private BetService $betService) {}
+
     public function viewBet(string $id): View
     {
         /** @var Bet $bet */
         $bet = Bet::find($id);
         Gate::authorize('read', $bet);
-        $placedBets = PlacedBet::with('answer')
-            ->with('user')
-            ->where('bet_id', $id)
-            ->orderByDesc('points')
-            ->paginate(50);
+        $placedBets = $this->betService->getPlacedBetsForBet($bet);
         $canPlaceBet = Gate::allows('canPlaceBet', $bet);
         $canDetermineBet = Gate::allows('canDetermineBet', $bet);
 
