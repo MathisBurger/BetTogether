@@ -119,5 +119,5 @@ return [
         'privacyPolicy' => 'Privacy Policy',
         'imprint' => 'Imprint',
     ],
-    'search' => 'Search'
+    'search' => 'Search',
 ];

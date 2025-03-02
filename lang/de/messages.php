@@ -109,5 +109,5 @@ return [
         'privacyPolicy' => 'Datenschutzerklärung',
         'imprint' => 'Impressum',
     ],
-    'search' => 'Suchen'
+    'search' => 'Suchen',
 ];

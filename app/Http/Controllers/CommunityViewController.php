@@ -26,7 +26,7 @@ readonly class CommunityViewController
             });
         if (request()->has('search')) {
             $query->where(function ($query) {
-                $query->where('name', 'like', '%' . request('search') . '%');
+                $query->where('name', 'like', '%'.request('search').'%');
             });
         }
 
