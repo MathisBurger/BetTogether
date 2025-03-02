@@ -63,8 +63,10 @@ class CommunityActions
             'joinPolicy' => ['required', 'string', new Enum(CommunityJoinPolicy::class)],
             'betCreationPolicy' => ['required', 'string', new Enum(BetCreationPolicy::class)],
         ])->validate();
+        $inviteLinks = ($data['inviteLinks'] ?? '') === 'on';
         $community->joinPolicy = $data['joinPolicy'];
         $community->betCreationPolicy = $data['betCreationPolicy'];
+        $community->inviteLinks = $inviteLinks;
 
         Gate::authorize('update', $community);
 

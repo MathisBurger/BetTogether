@@ -110,4 +110,5 @@ return [
         'imprint' => 'Impressum',
     ],
     'search' => 'Suchen',
+    'inviteLinksEnabled' => 'Einladungslinks aktivieren',
 ];

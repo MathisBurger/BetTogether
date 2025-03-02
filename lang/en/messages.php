@@ -120,4 +120,5 @@ return [
         'imprint' => 'Imprint',
     ],
     'search' => 'Search',
+    'inviteLinksEnabled' => 'Invite links enabled',
 ];
