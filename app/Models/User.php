@@ -74,4 +74,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(PlacedBet::class);
     }
+
+    public function favouriteLeaderboards(): BelongsToMany
+    {
+        return $this->belongsToMany(Leaderboard::class, 'favorite_leaderboards', 'user_id', 'leaderboard_id');
+    }
 }

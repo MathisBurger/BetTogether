@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Models\Community;
 use App\Models\Leaderboard;
 use App\Service\RankingService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -61,5 +62,22 @@ class LeaderboardActions
     {
         Gate::authorize('canDeleteLeaderboard', $leaderboard->community);
         $leaderboard->delete();
+    }
+
+    /**
+     * Changes the favorite status of an leaderboard
+     *
+     * @param Leaderboard $leaderboard The leaderboard that should be marked / unmarked as favorite
+     * @return void
+     */
+    public function changeFavorite(Leaderboard $leaderboard): void
+    {
+        Gate::authorize('read', $leaderboard);
+        if ($leaderboard->favoritesBy()->where('user_id', Auth::id())->exists()) {
+            $leaderboard->favoritesBy()->detach(Auth::id());
+        } else {
+            $leaderboard->favoritesBy()->attach(Auth::id());
+        }
+        $leaderboard->save();
     }
 }

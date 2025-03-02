@@ -78,6 +78,7 @@ readonly class CommunityViewController
 
             return [
                 'id' => $leaderboardObject->id,
+                'isFavorite' => $leaderboardObject->favoritesBy()->where('user_id', Auth::id())->exists(),
                 'name' => $leaderboardObject->name,
                 'standings' => $standings,
             ];

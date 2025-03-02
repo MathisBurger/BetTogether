@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -32,5 +33,10 @@ class Leaderboard extends Model
     public function standings(): HasMany
     {
         return $this->hasMany(Standing::class);
+    }
+
+    public function favoritesBy(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favorite_leaderboards', 'leaderboard_id', 'user_id');
     }
 }
