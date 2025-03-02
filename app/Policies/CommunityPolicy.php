@@ -104,7 +104,7 @@ class CommunityPolicy implements PolicyInterface
             return false;
         }
 
-        return $community->joinPolicy === CommunityJoinPolicy::Open->value;
+        return $community->joinPolicy === CommunityJoinPolicy::Open->value || $community->inviteLinks;
     }
 
     public static function registerOther(): void {}

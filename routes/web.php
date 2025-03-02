@@ -31,6 +31,7 @@ Route::middleware([
     Route::get('/communities/{community}/edit', [CommunityViewController::class, 'viewEditCommunity'])->name('show-edit-community');
     Route::post('/communities/{community}/edit', [CommunityActionController::class, 'update'])->name('update-community-action');
     Route::post('/communities/{community}/join', [CommunityActionController::class, 'joinCommunity'])->name('join-community-action');
+    Route::get('/communities/{community}/invite', [CommunityViewController::class, 'communityInvite'])->name('view-invite-community');
 
     // Bet
     Route::get('/communities/{community}/create-bet', [BetViewController::class, 'createBetView'])->name('create-bet');

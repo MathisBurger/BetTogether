@@ -10,6 +10,12 @@
         @if(Gate::allows('createBet', $community))
             <x-link href="{{route('create-bet', $community->id)}}">{{__('messages.createBet')}}</x-link>
         @endif
+        @if($community->inviteLinks)
+            <x-button id="copyButton">
+                {{__('messages.copyInviteLink')}}
+                <i class="fas fa-copy" id="copyIcon"></i>
+            </x-button>
+        @endif
     </x-slot>
     <x-main-content-card>
 
@@ -39,3 +45,17 @@
 
     </x-main-content-card>
 </x-app-layout>
+
+@if($community->inviteLinks)
+    <script>
+        document.getElementById("copyButton").addEventListener('click', () => {
+            navigator.clipboard.writeText('{{route('view-invite-community', $community)}}');
+            document.getElementById("copyIcon").classList.remove("fa-copy");
+            document.getElementById("copyIcon").classList.add("fa-check");
+            setTimeout(() => {
+                document.getElementById("copyIcon").classList.remove("fa-check");
+                document.getElementById("copyIcon").classList.add("fa-copy");
+            }, 1000);
+        });
+    </script>
+@endif

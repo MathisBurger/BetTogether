@@ -93,4 +93,11 @@ readonly class CommunityViewController
 
         return \view('community.editCommunity', ['community' => $community]);
     }
+
+    public function communityInvite(string $id): View
+    {
+        $community = Community::where('id', $id)->first();
+        $joinAllowed = Gate::allows('join', $community);
+        return \view('community.communityInvite', ['community' => $community, 'joinAllowed' => $joinAllowed]);
+    }
 }
