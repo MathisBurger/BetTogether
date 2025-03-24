@@ -102,3 +102,86 @@ Cookies, die zur Durchführung des elektronischen Kommunikationsvorgangs, zur Be
 Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden und Cookies nur im Einzelfall erlauben, die Annahme von Cookies für bestimmte Fälle oder generell ausschließen sowie das automatische Löschen der Cookies beim Schließen des Browsers aktivieren. Bei der Deaktivierung von Cookies kann die Funktionalität dieser Website eingeschränkt sein.
 
 Welche Cookies und Dienste auf dieser Website eingesetzt werden, können Sie dieser Datenschutzerklärung entnehmen.
+
+### Verwendung des Webanalyse-Dienstes Plausible Analytics
+
+Diese Website nutzt zur Besucherstatistik den datenschutzfreundlichen
+Webanalyse-Dienst Plausible Analytics. Anbieter ist Plausible Insights
+OÜ, Tartu, Estland (EU). Die Webanalyse basiert rein auf
+anonymisierten Daten und nutzt keine Cookies. Ein Rückschluss auf
+Personen ist nicht möglich. Beim Besuch unserer Website werden
+folgende Daten bei Plausible Analytics gespeichert: URL der
+aufgerufenen Seite oder Datei, URL der Seite über die Sie auf unsere
+Seite gekommen sind (Referrer), URL eines ausgehenden Links, den Sie
+auf unserer Seite geklickt haben (Outbound Link), Browsertyp und
+-version, Betriebssystem Ihres Gerätes und der Gerätetyp.
+Informationen zu Ihrem Standort (Land, Region und Stadt) werden
+näherungsweise aus Ihrer IP-Adresse ermittelt; die IP-Adresse selbst
+wird nicht gespeichert. Die Einbindung von Plausible Analytics erfolgt
+aufgrund unseres Interesses an einer statistischen Betrachtung der
+Nutzung unserer Website. Dies stellt ein berechtigtes Interesse im
+Sinne von Art. 6 Abs. 1 lit. f DSGVO dar. Weitere Informationen zum
+Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von
+Plausible Analytics:
+[plausible.io/privacy](https://plausible.io/privacy) und
+[plausible.io/data-policy](https://plausible.io/data-policy).
+
+### Fehlerreporting und Monitoring: Sentry<
+
+Um den fehlerfreien Betrieb unserer Dienste sicherzustellen und beim
+Auftreten von Fehlern schnellstmöglich reagieren zu können, nutzen wir
+den Dienst Sentry. Über Sentry werden server- oder clientseitig
+auftretende Fehler automatisch erfasst und an uns gemeldet. Dabei achten
+wir darauf, dass personenbezogene Daten weitmöglich entfernt werden. In
+speziellen Fällen ist nicht auszuschließen, dass eine Fehlermeldung auch
+personenbezogene Daten enthält, z.B. wenn der Fehler in Zusammenhang mit
+einer Nutzereingabe auftritt. Sentry ist ein Dienst der
+
+Functional Software Inc.
+
+132 Hawthorne Street
+
+San Francisco
+
+California 94107
+
+USA
+
+(im Folgenden „Sentry”). Die Vereinbarung zur
+Auftragsdatenverarbeitung (Data Processing Agreement) von Sentry können
+Sie unter folgendem Link nachlesen:
+[https://sentry.io/legal/dpa/](https://sentry.io/legal/dpa/)
+
+Die Datenschutzerklärung von Sentry können Sie unter folgendem Link
+nachlesen:
+[https://sentry.io/privacy/](https://sentry.io/privacy/) Ein
+Auftragsdatenverarbeitungsvertrag mit Sentry wurde abgeschlossen. Darin
+wird Sentry auch bei einer möglichen Datenverarbeitung in Drittländern
+(z.B. durch Wartungsarbeiten) mit Hilfe der EU-Standardvertragsklauseln
+zur Einhaltung des EU-Datenschutzniveaus verpflichtet. Die
+Datenverarbeitung erfolgt auf Grundlage unseren berechtigten Interessen
+(§ 6 Nr. 8 DSG-EKD) an der technisch fehlerfreien und optimierten
+Bereitstellung unserer Dienste. Die von Sentry erfassten Fehler werden
+in der Google Cloud Platform der Firma
+
+Google LLC
+
+1600 Amphitheatre Parkway
+
+Mountain View, CA
+
+94043
+
+USA 
+
+(im Folgenden „Google Cloud Platform”)
+gespeichert. Die Rechenzentren der Google Cloud Platform sind unter
+anderem nach SOC 2 Type II, ISO/IEC 27001 und PCI-DSS zertifiziert. Die
+Hinweise zur Datenverarbeitung und Sicherheit (Data Processing and
+Security Terms) der Google Cloud Platform können Sie unter folgendem
+Link nachlesen:
+[https://cloud.google.com/terms/data-processing-terms](https://cloud.google.com/terms/data-processing-terms)
+
+Die Datenschutzerklärung der Google Cloud Platform können Sie unter
+folgendem Link nachlesen:
+[https://cloud.google.com/terms/cloud-privacy-notice](https://cloud.google.com/terms/cloud-privacy-notice)
